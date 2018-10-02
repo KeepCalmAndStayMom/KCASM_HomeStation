@@ -54,7 +54,7 @@ public class HomestationSettings {
         StringBuilder builder = new StringBuilder();
 
         try {
-            Scanner scan = new Scanner(new File("C:\\Users\\Gabriele\\IdeaProjects\\KCASM_HomeStation\\src\\main\\resources\\settings.json"));
+            Scanner scan = new Scanner(new File("C:\\Users\\Paolo\\IdeaProjects\\KCASM_HomeStation\\src\\main\\resources\\settings.json"));
         while(scan.hasNext())
             builder.append(scan.next());
         } catch (FileNotFoundException e) {
