@@ -7,7 +7,7 @@ import homestation.zway.ZWaySensor;
 import java.time.LocalDate;
 import java.util.Calendar;
 
-public class ControllerThread extends Thread{
+public class ControllerThread extends Thread {
 
     private HueObject obj;
     private ZWaySensor zway;

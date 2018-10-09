@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- This network was created in GeNIe Academic, which can be used for educational and research purposes only -->
+<smile version="1.0" id="Network1" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="Contrazione">
+			<state id="No_fitbit" />
+			<state id="Nessuna" />
+			<state id="Braxton_Hicks" />
+			<state id="Reale_moderata" />
+			<state id="Reale_forte" />
+			<state id="Reale_mista" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+		</cpt>
+		<decision id="Ospedale">
+			<state id="Andare" />
+			<state id="Non_andare" />
+		</decision>
+		<cpt id="Distanza">
+			<state id="Meno_di_3_kilometri" />
+			<state id="Tra_3_e_10_kilometri" />
+			<state id="Oltre_10_kilometri" />
+			<probabilities>0.2 0.4500000000000001 0.35</probabilities>
+		</cpt>
+		<cpt id="Parto">
+			<state id="Improbabile" />
+			<state id="Probabile" />
+			<parents>Contrazione</parents>
+			<probabilities>0.5 0.5 0.99 0.01000000000000001 0.99 0.01000000000000001 0.25 0.75 0.1 0.9 0.17 0.83</probabilities>
+		</cpt>
+		<utility id="Utility">
+			<parents>Distanza Ospedale Parto</parents>
+			<utilities>0.3 0.7 0.7 0.2 0.2 0.8 0.8 0.1 0.1 0.9 1 0</utilities>
+		</utility>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 2.2.2601.0 ACADEMIC" name="Network1" faultnameformat="nodestate">
+			<node id="Contrazione">
+				<name>Contrazione</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>521 25 661 85</position>
+			</node>
+			<node id="Ospedale">
+				<name>Ospedale</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>302 159 397 220</position>
+			</node>
+			<node id="Distanza">
+				<name>Distanza</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>52 165 169 231</position>
+			</node>
+			<node id="Utility">
+				<name>Utility</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>288 339 406 431</position>
+			</node>
+			<node id="Parto">
+				<name>Parto</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>535 173 647 236</position>
+			</node>
+		</genie>
+	</extensions>
+</smile>
