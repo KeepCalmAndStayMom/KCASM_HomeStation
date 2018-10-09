@@ -1,18 +1,28 @@
 package homestation.hospital;
 
 class HospitalConstants {
-    final static int SOGLIA_MINIMA = 105;
-    final static int SOGLIA_GINNASTICA = 130;
-    final static int SOGLIA_DOLORE = 145;
+    final static int MINIMUM_THRESHOLD = 105;
+    final static int FITNESS_THRESHOLD = 130;
+    final static int PAIN_THRESHOLD = 145;
 
-    final static int SALTO_MASSIMO = 120;
+    final static int MAXIMUM_SKIP_BETWEEN_SAMPLINGS = 120;
 
-    final static int TROPPO_POCHI_CAMPIONAMENTI = 1;
+    final static int TOO_FEW_SAMPLINGS = 1;
 
-    final static int STIMA_INIZIO_CONTRAZIONI = 26;
-    //aggiungere gli altri numeri di settimane
+    final static int WEEK_SIZE = 7;
+    final static int CONTRACTION_BEGINNING_ESTIMATION = 26;
+    final static int ADVANCED_PREGNANCY = 32;
+    final static int ALMOST_BIRTH = 38;
 
-    //aggiungere i valori delle contrazioni
+    final static int MINIMUM_FREQUENCY_MODERATE = 5;
+    final static int MAXIMUM_FREQUENCY_MODERATE = 10;
+    final static int MINIMUM_FREQUENCY_STRONG = 3;
+    final static int MAXIMUM_FREQUENCY_STRONG = 4;
+
+    final static int MINIMUM_DURATION_MODERATE = 30;
+    final static int MAXIMUM_DURATION_MODERATE = 90;
+    final static int MINIMUM_DURATION_STRONG = 15;
+    final static int MAXIMUM_DURATION_STRONG = 30;
 
     final static String ACTIVITIES_START_MORNING = "09:00:00";
     final static String ACTIVITIES_END_MORNING = "11:00:00";

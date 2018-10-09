@@ -4,13 +4,13 @@ import homestation.fitbit.SamplingHeartbeat;
 
 import java.util.ArrayList;
 
-public class CreateSamplingHeartbeatTestList {
+class CreateSamplingHeartbeatTestList {
 
     /*nota 1: "sintomi di contrazione moderata/forte" vuol dire che potrebbe non essere considerata tale a causa di fattori come la settimana di gravidanza o la presenza di task...*/
     /*nota 2: i primi 5 metodi sono stati pensati per valutare le contrazioni senza tenere conto della loro regolarità*/
     /*nota 3: i metodi successivi al quinto cercano di simulare campionamenti più realistici*/
 
-    public void createList1(ArrayList<SamplingHeartbeat> l) {//tutto sotto la soglia minima
+    static void createList1(ArrayList<SamplingHeartbeat> l) {//tutto sotto la soglia minima
         l.add(new SamplingHeartbeat(85, "12:00:00"));
         l.add(new SamplingHeartbeat(95, "12:00:05"));
         l.add(new SamplingHeartbeat(95, "12:00:15"));
@@ -33,7 +33,7 @@ public class CreateSamplingHeartbeatTestList {
         l.add(new SamplingHeartbeat(95, "12:29:59"));//fine terza sottolista valutabile
     }
 
-    public void createList2(ArrayList<SamplingHeartbeat> l) {//tutto sotto la soglia ginnastica
+    static void createList2(ArrayList<SamplingHeartbeat> l) {//tutto sotto la soglia ginnastica
         l.add(new SamplingHeartbeat(110, "12:00:00"));
         l.add(new SamplingHeartbeat(115, "12:00:05"));
         l.add(new SamplingHeartbeat(120, "12:00:15"));
@@ -58,7 +58,7 @@ public class CreateSamplingHeartbeatTestList {
         l.add(new SamplingHeartbeat(110, "15:00:59"));//sintomi di contrazione moderata, ma nella fascia di ginnastica
     }
 
-    public void createList3(ArrayList<SamplingHeartbeat> l) {//tutto sotto la soglia dolore
+    static void createList3(ArrayList<SamplingHeartbeat> l) {//tutto sotto la soglia dolore
         l.add(new SamplingHeartbeat(135, "12:00:00"));
         l.add(new SamplingHeartbeat(140, "12:00:05"));
         l.add(new SamplingHeartbeat(145, "12:00:15"));
@@ -110,7 +110,7 @@ public class CreateSamplingHeartbeatTestList {
         l.add(new SamplingHeartbeat(110, "12:25:15"));//falsa contrazione, troppo breve
     }
 
-    public void createList4(ArrayList<SamplingHeartbeat> l) {//anche sopra la soglia dolore
+    static void createList4(ArrayList<SamplingHeartbeat> l) {//anche sopra la soglia dolore
         l.add(new SamplingHeartbeat(155, "11:55:00"));
         l.add(new SamplingHeartbeat(160, "11:55:05"));
         l.add(new SamplingHeartbeat(165, "11:55:10"));
@@ -167,7 +167,7 @@ public class CreateSamplingHeartbeatTestList {
         l.add(new SamplingHeartbeat(110, "15:00:59"));//sintomi di contrazione moderata, ma nella fascia di ginnastica
     }
 
-    public void createList5(ArrayList<SamplingHeartbeat> l) {//anche campionamenti con battito null
+    static void createList5(ArrayList<SamplingHeartbeat> l) {//anche campionamenti con battito null
         l.add(new SamplingHeartbeat(null, "11:55:00"));
         l.add(new SamplingHeartbeat(160, "11:55:05"));
         l.add(new SamplingHeartbeat(165, "11:55:10"));
@@ -226,7 +226,7 @@ public class CreateSamplingHeartbeatTestList {
         l.add(new SamplingHeartbeat(110, "18:00:40"));//sintomi di contrazione moderata
     }
 
-    public void createRealisticList1(ArrayList<SamplingHeartbeat> l) {//principalmente sotto la soglia dolore
+    static void createRealisticList1(ArrayList<SamplingHeartbeat> l) {//principalmente sotto la soglia dolore
         l.add(new SamplingHeartbeat(80, "17:45:00"));
         l.add(new SamplingHeartbeat(84, "17:45:12"));
         l.add(new SamplingHeartbeat(82, "17:45:18"));
