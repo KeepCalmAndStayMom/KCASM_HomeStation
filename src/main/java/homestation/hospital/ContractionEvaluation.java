@@ -11,10 +11,10 @@ import java.util.ArrayList;
 
 class ContractionEvaluation {
     
-    //private static LocalDate gravidanza1 = LocalDate.parse("2018-10-01"); //meno di 26
-    //private static LocalDate gravidanza2 = LocalDate.parse("2018-09-01"); //tra 26 e 32
-    private static LocalDate gravidanza3 = LocalDate.parse("2018-02-01"); //tra 32 e 38
-    //private static LocalDate gravidanza4 = LocalDate.parse("2017-10-01"); //più di 38
+    private static int gravidanza1 = 22; //meno di 26
+    private static int gravidanza2 = 28; //tra 26 e 32
+    private static int gravidanza3 = 34; //tra 32 e 38
+    private static int gravidanza4 = 40; //più di 38
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     private static int nNoContr = 0, nFalseContr = 0, nModerateContr = 0, nStrongContr = 0;
@@ -23,8 +23,11 @@ class ContractionEvaluation {
     private static int previousDuration = 0, previousMean = 0;
     
     static void calculateContraction(ArrayList<SamplingHeartbeat> l, Network net) {
+        resetCountersAndPrevious();
+
         //la data di inizio gravidanza va estratta da JSON (API), se è troppo presto andrà settata l'evidenza con nessunaContrazione
-        int pregnancyWeek = (int) ChronoUnit.DAYS.between(gravidanza3, LocalDate.now()) / HospitalConstants.WEEK_SIZE;
+        //int pregnancyWeek = (int) ChronoUnit.WEEKS.between(data_ottenuta_da API, LocalDate.now());
+        int pregnancyWeek = gravidanza4;
         if (pregnancyWeek < HospitalConstants.CONTRACTION_BEGINNING_ESTIMATION) {
             System.out.println("È ancora troppo presto per le contrazioni");
             net.setEvidence("Contrazione", "Nessuna");
@@ -45,6 +48,17 @@ class ContractionEvaluation {
         System.out.println("moderata: " + nModerateContr);
         System.out.println("forte: " + nStrongContr);
         System.out.println(misuraTipoContrazione());
+    }
+
+    private static void resetCountersAndPrevious() {
+        nNoContr = 0;
+        nFalseContr = 0;
+        nModerateContr = 0;
+        nStrongContr = 0;
+
+        previousDuration = 0;
+        previousMean = 0;
+        previousList = null;
     }
 
     private static ArrayList<ArrayList<SamplingHeartbeat>> samplingScan(ArrayList<SamplingHeartbeat> l) {
@@ -106,10 +120,8 @@ class ContractionEvaluation {
                                 previousList = lc;
                                 nModerateContr++;
                             }
-                            else {
-                                previousList = lc;
+                            else
                                 nFalseContr++;
-                            }
                         }
                     }
                     else {
@@ -153,7 +165,7 @@ class ContractionEvaluation {
                 }
                 else {
                     if (pregnancyWeek >= HospitalConstants.ADVANCED_PREGNANCY) {
-                        if (currentDuration > HospitalConstants.MINIMUM_DURATION_MODERATE && currentDuration <= HospitalConstants.MAXIMUM_DURATION_MODERATE && currentMean <= HospitalConstants.PAIN_THRESHOLD) {
+                        if (currentDuration > HospitalConstants.MINIMUM_DURATION_MODERATE && currentDuration <= HospitalConstants.MAXIMUM_DURATION_MODERATE && currentMean <= HospitalConstants.PAIN_THRESHOLD && pregnancyWeek < HospitalConstants.ALMOST_BIRTH) {
                             nModerateContr++;
                             compareWithPreviousContraction(HospitalConstants.MINIMUM_DURATION_MODERATE, HospitalConstants.MAXIMUM_DURATION_MODERATE, HospitalConstants.MINIMUM_FREQUENCY_MODERATE, HospitalConstants.MAXIMUM_FREQUENCY_MODERATE, currentDuration, currentMean, lc, "moderate");
                         }

@@ -5,6 +5,7 @@ import smile.Network;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class HospitalThread extends Thread {
 
@@ -35,19 +36,35 @@ public class HospitalThread extends Thread {
         //net.readFile("src/main/resources/rete_parto.xdsl");
         net.readFile("src/main/resources/rete_parto.xdsl");
 
-        //while (true) {
+        while (true) {
             //chiedo a Fitbit i dati dell'ultima mezz'ora (qui ci sono liste già pronte per i test ma nell'applicazione reale uso la API di Fitbit)
             ArrayList<SamplingHeartbeat> l = new ArrayList<>();
-            //CreateSamplingHeartbeatTestList.createList1(l);
-            //CreateSamplingHeartbeatTestList.createList2(l);
-            //CreateSamplingHeartbeatTestList.createList3(l);
-            //CreateSamplingHeartbeatTestList.createList4(l);
-            //CreateSamplingHeartbeatTestList.createList5(l);
-            CreateSamplingHeartbeatTestList.createRealisticList1(l);
-
+            Random rand = new Random();
+            int randomTest = rand.nextInt(6) + 1;
+            switch (randomTest) {
+                case 1:
+                    CreateSamplingHeartbeatTestList.createList1(l);
+                    break;
+                case 2:
+                    CreateSamplingHeartbeatTestList.createList2(l);
+                    break;
+                case 3:
+                    CreateSamplingHeartbeatTestList.createList3(l);
+                    break;
+                case 4:
+                    CreateSamplingHeartbeatTestList.createList4(l);
+                    break;
+                case 5:
+                    CreateSamplingHeartbeatTestList.createList5(l);
+                    break;
+                default:
+                    CreateSamplingHeartbeatTestList.createRealisticList1(l);
+                    break;
+            }
             ContractionEvaluation.calculateContraction(l, net);
 
             //calcolo la distanza: uso la API di geocoding per ottenere le coordinate, poi uso la API di routing passando le coordinate per ottenere la distanza
+
 
             //calcolo la EU di andare e non andare in ospedale, se è meglio andare il bot di Telegram manda una notifica
             net.updateBeliefs();
@@ -73,7 +90,7 @@ public class HospitalThread extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        //}
+        }
 
     }
 }

@@ -9,7 +9,6 @@ class HospitalConstants {
 
     final static int TOO_FEW_SAMPLINGS = 1;
 
-    final static int WEEK_SIZE = 7;
     final static int CONTRACTION_BEGINNING_ESTIMATION = 26;
     final static int ADVANCED_PREGNANCY = 32;
     final static int ALMOST_BIRTH = 38;
