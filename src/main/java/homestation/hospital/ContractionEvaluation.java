@@ -10,30 +10,32 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 class ContractionEvaluation {
-    
+
+    /*
     private static int gravidanza1 = 22; //meno di 26
     private static int gravidanza2 = 28; //tra 26 e 32
     private static int gravidanza3 = 34; //tra 32 e 38
     private static int gravidanza4 = 40; //più di 38
+    */
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
     private static int nNoContr = 0, nFalseContr = 0, nModerateContr = 0, nStrongContr = 0;
-
     private static ArrayList<SamplingHeartbeat> previousList = null;
     private static int previousDuration = 0, previousMean = 0;
     
-    static void calculateContraction(ArrayList<SamplingHeartbeat> l, Network net) {
+    static void calculateContraction(ArrayList<SamplingHeartbeat> l, Network net, LocalDate startPregnancy) {
         resetCountersAndPrevious();
 
-        //la data di inizio gravidanza va estratta da JSON (API), se è troppo presto andrà settata l'evidenza con nessunaContrazione
-        //int pregnancyWeek = (int) ChronoUnit.WEEKS.between(data_ottenuta_da API, LocalDate.now());
-        int pregnancyWeek = gravidanza4;
+        int pregnancyWeek = (int) ChronoUnit.WEEKS.between(startPregnancy, LocalDate.now());
+
+        //int pregnancyWeek = gravidanza1;
+        //int pregnancyWeek = gravidanza2;
+        //int pregnancyWeek = gravidanza3;
+        //int pregnancyWeek = gravidanza4;
+
         if (pregnancyWeek < HospitalConstants.CONTRACTION_BEGINNING_ESTIMATION) {
-            System.out.println("È ancora troppo presto per le contrazioni");
             net.setEvidence("Contrazione", "Nessuna");
             return;
         }
-        //System.out.println(pregnancyWeek);
 
         ArrayList<ArrayList<SamplingHeartbeat>> evaluationList = samplingScan(l);
 

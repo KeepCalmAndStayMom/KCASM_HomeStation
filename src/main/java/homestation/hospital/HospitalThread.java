@@ -1,16 +1,27 @@
 package homestation.hospital;
 
+import com.google.gson.Gson;
+import homestation.HomestationSettings;
 import homestation.fitbit.SamplingHeartbeat;
 import smile.Network;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.*;
 
 public class HospitalThread extends Thread {
 
+    private LocalDate PREGNANCY_START = null;
+
     @Override
     public void run() {
+        System.setProperty("jsmile.native.library", "C:/Users/Paolo/IdeaProjects/KCASM_HomeStation/lib/jsmile.dll");
         new smile.License(
                 "SMILE LICENSE f08b4722 ab3866b5 ead85dce " +
                         "THIS IS AN ACADEMIC LICENSE AND CAN BE USED " +
@@ -30,11 +41,10 @@ public class HospitalThread extends Thread {
                 }
         );
 
-        System.setProperty("jsmile.native.library", "C:/Users/Paolo/IdeaProjects/KCASM_HomeStation/lib/jsmile.dll");
-
         Network net = new Network();
-        //net.readFile("src/main/resources/rete_parto.xdsl");
         net.readFile("src/main/resources/rete_parto.xdsl");
+
+        setPregnancyStart();
 
         while (true) {
             //chiedo a Fitbit i dati dell'ultima mezz'ora (qui ci sono liste già pronte per i test ma nell'applicazione reale uso la API di Fitbit)
@@ -61,7 +71,7 @@ public class HospitalThread extends Thread {
                     CreateSamplingHeartbeatTestList.createRealisticList1(l);
                     break;
             }
-            ContractionEvaluation.calculateContraction(l, net);
+            ContractionEvaluation.calculateContraction(l, net, PREGNANCY_START);
 
             //calcolo la distanza: uso la API di geocoding per ottenere le coordinate, poi uso la API di routing passando le coordinate per ottenere la distanza
 
@@ -85,12 +95,34 @@ public class HospitalThread extends Thread {
             net.clearAllEvidence();
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(HospitalConstants.SAMPLING_FREQUENCY);
                 System.out.println("Riparte il campionamento ecc");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
 
+    //poiché nel DB la data di inizio gravidanza non può essere null, verrà sempre trovata
+    private void setPregnancyStart() {
+        try {
+            StringBuilder result = new StringBuilder();
+            URL url = new URL("http://localhost:4567/api/users/initial_date/" + HomestationSettings.HOMESTATION_ID);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line;
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+            }
+            rd.close();
+
+            HashMap map = new Gson().fromJson(result.toString(), HashMap.class);
+            PREGNANCY_START = LocalDate.parse((String) map.get("data_inizio_gravidanza"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

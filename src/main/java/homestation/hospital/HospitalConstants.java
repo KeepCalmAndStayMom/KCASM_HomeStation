@@ -34,4 +34,6 @@ class HospitalConstants {
     final static String REAL_MODERATE_CONTRACTION = "Reale_moderata";
     final static String REAL_STRONG_CONTRACTION = "Reale_forte";
     final static String REAL_MIXED_CONTRACTION = "Reale mista";
+
+    final static int SAMPLING_FREQUENCY = 5000;
 }

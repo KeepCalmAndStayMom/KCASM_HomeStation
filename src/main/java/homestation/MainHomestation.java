@@ -15,9 +15,9 @@ public class MainHomestation {
 
     public static void main(String[] args) {
 
-        /*HomestationSettings.createSettings();
+        HomestationSettings.createSettings();
 
-        LocalDate localDate = LocalDate.now();
+        /*LocalDate localDate = LocalDate.now();
         Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
         cal2.add(Calendar.MINUTE, -5);
