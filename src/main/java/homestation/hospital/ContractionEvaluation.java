@@ -1,8 +1,12 @@
 package homestation.hospital;
 
+import homestation.HomestationSettings;
 import homestation.fitbit.SamplingHeartbeat;
 import smile.Network;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -84,7 +88,7 @@ class ContractionEvaluation {
                 lTmp.add(c);
             }
             else {
-                if ((int) ChronoUnit.SECONDS.between(LocalTime.parse(previousSampling.date, formatter), LocalTime.parse(c.date, formatter)) > HospitalConstants.MAXIMUM_SKIP_BETWEEN_SAMPLINGS) {
+                if ((int) ChronoUnit.SECONDS.between(LocalTime.parse(previousSampling.time, formatter), LocalTime.parse(c.time, formatter)) > HospitalConstants.MAXIMUM_SKIP_BETWEEN_SAMPLINGS) {
                     evaluationList.add(new ArrayList<>(lTmp));
                     lTmp.clear();
                 }
@@ -99,7 +103,7 @@ class ContractionEvaluation {
     }
 
     private static void samplingEvaluation(ArrayList<ArrayList<SamplingHeartbeat>> evaluationList, int pregnancyWeek) {
-        boolean taskPresence = false; //usare API con categoria checkFitnessTime e data di oggi
+        boolean taskPresence = checkActivitiesInTheDay(); //usare API con categoria ginnastica e data di oggi
 
         System.out.println(pregnancyWeek + " settimane, presenza task: " + taskPresence);
 
@@ -111,11 +115,11 @@ class ContractionEvaluation {
                 if (mean(lc) <= HospitalConstants.MINIMUM_THRESHOLD)
                     nNoContr++;
                 else {
-                    previousDuration = (int) ChronoUnit.SECONDS.between(LocalTime.parse(lc.get(0).date, formatter), LocalTime.parse(lc.get(lc.size()-1).date, formatter));
+                    previousDuration = (int) ChronoUnit.SECONDS.between(LocalTime.parse(lc.get(0).time, formatter), LocalTime.parse(lc.get(lc.size()-1).time, formatter));
                     previousMean = mean(lc);
 
                     if (previousMean <= HospitalConstants.FITNESS_THRESHOLD) {
-                        if (taskPresence && (checkFitnessTime(lc.get(0).date) || checkFitnessTime(lc.get(lc.size()-1).date)))
+                        if (taskPresence && (checkFitnessTime(lc.get(0).time) || checkFitnessTime(lc.get(lc.size()-1).time)))
                             nNoContr++;
                         else {
                             if (pregnancyWeek >= HospitalConstants.ADVANCED_PREGNANCY && previousDuration >= HospitalConstants.MINIMUM_DURATION_MODERATE && previousDuration <= HospitalConstants.MAXIMUM_DURATION_MODERATE) {
@@ -151,10 +155,10 @@ class ContractionEvaluation {
             if (currentMean <= HospitalConstants.MINIMUM_THRESHOLD)
                 nNoContr++;
             else {
-                int currentDuration = (int) ChronoUnit.SECONDS.between(LocalTime.parse(lc.get(0).date, formatter), LocalTime.parse(lc.get(lc.size()-1).date, formatter));
+                int currentDuration = (int) ChronoUnit.SECONDS.between(LocalTime.parse(lc.get(0).time, formatter), LocalTime.parse(lc.get(lc.size()-1).time, formatter));
 
                 if (currentMean <= HospitalConstants.FITNESS_THRESHOLD) {
-                    if (taskPresence && (checkFitnessTime(lc.get(0).date) || checkFitnessTime(lc.get(lc.size()-1).date)))
+                    if (taskPresence && (checkFitnessTime(lc.get(0).time) || checkFitnessTime(lc.get(lc.size()-1).time)))
                         nNoContr++;
                     else {
                         if (pregnancyWeek >= HospitalConstants.ADVANCED_PREGNANCY && currentDuration >= HospitalConstants.MINIMUM_DURATION_MODERATE && currentDuration <= HospitalConstants.MAXIMUM_DURATION_MODERATE) {
@@ -185,8 +189,19 @@ class ContractionEvaluation {
         }
     }
 
+    private static boolean checkActivitiesInTheDay() {
+        try {
+            URL url = new URL(HospitalConstants.ACTIVITIES_URL + LocalDate.now());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            return conn.getResponseCode() == 200;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
     private static void compareWithPreviousContraction(int minDuration, int maxDuration, int minFrequency, int maxFrequency, int currentDuration, int currentMean, ArrayList<SamplingHeartbeat> currentList, String type) {
-        int frequency = (int) ChronoUnit.MINUTES.between(LocalTime.parse(previousList.get(0).date, formatter), LocalTime.parse(currentList.get(0).date, formatter));
+        int frequency = (int) ChronoUnit.MINUTES.between(LocalTime.parse(previousList.get(0).time, formatter), LocalTime.parse(currentList.get(0).time, formatter));
 
         if (previousDuration >= minDuration && previousDuration <= maxDuration && frequency >= minFrequency && frequency <= maxFrequency) {
             switch (type) {
@@ -217,8 +232,8 @@ class ContractionEvaluation {
         return mean / dim;
     }
 
-    private static boolean checkFitnessTime(String data) {
-        return (data.compareTo(HospitalConstants.ACTIVITIES_START_MORNING) >= 0 && data.compareTo(HospitalConstants.ACTIVITIES_END_MORNING) <= 0 || data.compareTo(HospitalConstants.ACTIVITIES_START_AFTERNOON) >= 0 && data.compareTo(HospitalConstants.ACTIVITIES_END_AFTERNOON) <= 0);
+    private static boolean checkFitnessTime(String date) {
+        return (date.compareTo(HospitalConstants.ACTIVITIES_START_MORNING) >= 0 && date.compareTo(HospitalConstants.ACTIVITIES_END_MORNING) <= 0 || date.compareTo(HospitalConstants.ACTIVITIES_START_AFTERNOON) >= 0 && date.compareTo(HospitalConstants.ACTIVITIES_END_AFTERNOON) <= 0);
     }
 
     //modificabile con void come tipo di ritorno e settaggio evidenza all'interno degli if (net diventa un parametro da passare)

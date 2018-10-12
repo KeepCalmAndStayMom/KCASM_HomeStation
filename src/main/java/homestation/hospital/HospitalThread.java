@@ -107,7 +107,7 @@ public class HospitalThread extends Thread {
     private void setPregnancyStart() {
         try {
             StringBuilder result = new StringBuilder();
-            URL url = new URL("http://localhost:4567/api/users/initial_date/" + HomestationSettings.HOMESTATION_ID);
+            URL url = new URL(HospitalConstants.INITIAL_DATE_URL);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");

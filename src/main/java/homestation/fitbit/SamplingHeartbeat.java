@@ -2,15 +2,15 @@ package homestation.fitbit;
 
 public class SamplingHeartbeat {
     public Integer heartbeat;
-    public String date;
+    public String time;
 
-    public SamplingHeartbeat(Integer heartbeat, String date) {
+    public SamplingHeartbeat(Integer heartbeat, String time) {
         this.heartbeat = heartbeat;
-        this.date = date;
+        this.time = time;
     }
 
     @Override
     public String toString() {
-        return "battito: " + heartbeat + ", data: " + date;
+        return "(battito: " + heartbeat + ", ora: " + time + ")";
     }
 }

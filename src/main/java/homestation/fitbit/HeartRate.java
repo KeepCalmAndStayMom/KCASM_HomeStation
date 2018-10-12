@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class HeartRate extends Fitbit {
 
-    private ArrayList<Integer> heartbeats;
+    private ArrayList<SamplingHeartbeat> heartbeats;
 
     void getData(HttpRequest request) throws IOException {
         ArrayList<ArrayMap> dataset = (ArrayList) ((ArrayMap) request.execute().parseAs(HashMap.class).get("activities-heart-intraday")).get("dataset");
@@ -17,7 +17,7 @@ public class HeartRate extends Fitbit {
         heartbeats = new ArrayList<>();
 
         for (ArrayMap data : dataset)
-            heartbeats.add(((BigDecimal) data.get("value")).intValueExact());
+            heartbeats.add(new SamplingHeartbeat(((BigDecimal) data.get("value")).intValueExact(), ((String) data.get("time"))));
 
     }
 
@@ -35,8 +35,8 @@ public class HeartRate extends Fitbit {
         if (heartbeats.isEmpty())
             return null;
         int avg = 0;
-        for (Integer i : heartbeats)
-            avg+=i;
+        for (SamplingHeartbeat i : heartbeats)
+            avg += i.heartbeat;
         return avg/heartbeats.size();
     }
 }
