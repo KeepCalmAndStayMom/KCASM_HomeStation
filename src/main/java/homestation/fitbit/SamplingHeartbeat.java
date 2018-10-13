@@ -1,6 +1,6 @@
 package homestation.fitbit;
 
-public class SamplingHeartbeat {
+public class SamplingHeartbeat implements Comparable<SamplingHeartbeat> {
     public Integer heartbeat;
     public String time;
 
@@ -12,5 +12,10 @@ public class SamplingHeartbeat {
     @Override
     public String toString() {
         return "(battito: " + heartbeat + ", ora: " + time + ")";
+    }
+
+    @Override
+    public int compareTo(SamplingHeartbeat other) {
+            return time.compareTo(other.time);
     }
 }

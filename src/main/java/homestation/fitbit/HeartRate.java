@@ -5,6 +5,7 @@ import com.google.api.client.util.ArrayMap;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class HeartRate extends Fitbit {
@@ -19,6 +20,7 @@ public class HeartRate extends Fitbit {
         for (ArrayMap data : dataset)
             heartbeats.add(new SamplingHeartbeat(((BigDecimal) data.get("value")).intValueExact(), ((String) data.get("time"))));
 
+        Collections.sort(heartbeats);
     }
 
     @Override
