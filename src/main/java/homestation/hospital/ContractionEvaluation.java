@@ -38,6 +38,7 @@ class ContractionEvaluation {
 
         if (pregnancyWeek < HospitalConstants.CONTRACTION_BEGINNING_ESTIMATION) {
             net.setEvidence("Contrazione", "Nessuna");
+            net.setEvidence("Settimana_gravidanza", "Meno_di_26");
             return;
         }
 
@@ -47,13 +48,14 @@ class ContractionEvaluation {
 
         samplingEvaluation(evaluationList, pregnancyWeek);
         
-        net.setEvidence("Contrazione", misuraTipoContrazione());
-        
+        net.setEvidence("Contrazione", contractionTypeEvaluation());
+        net.setEvidence("Settimana_gravidanza", PregnancyTimeEvaluation(pregnancyWeek));
+
         System.out.println("nessuna: " + nNoContr);
         System.out.println("falsa: " + nFalseContr);
         System.out.println("moderata: " + nModerateContr);
         System.out.println("forte: " + nStrongContr);
-        System.out.println(misuraTipoContrazione());
+        System.out.println(contractionTypeEvaluation());
     }
 
     private static void resetCountersAndPrevious() {
@@ -237,7 +239,7 @@ class ContractionEvaluation {
     }
 
     //modificabile con void come tipo di ritorno e settaggio evidenza all'interno degli if (net diventa un parametro da passare)
-    private static String misuraTipoContrazione() {
+    private static String contractionTypeEvaluation() {
         if (nFalseContr == 0 && nModerateContr == 0 && nStrongContr == 0) {
             if (nNoContr > 0)
                 return HospitalConstants.NO_CONTRACTION;
@@ -255,5 +257,15 @@ class ContractionEvaluation {
             else
                 return HospitalConstants.REAL_STRONG_CONTRACTION;
         }
+    }
+
+    //modificabile nello stesso modo di contractionTypeEvaluation
+    private static String PregnancyTimeEvaluation(int pregnancyWeek) {
+        if (pregnancyWeek >= HospitalConstants.CONTRACTION_BEGINNING_ESTIMATION && pregnancyWeek < HospitalConstants.ADVANCED_PREGNANCY)
+            return "Tra_26_e_32";
+        else if (pregnancyWeek >= HospitalConstants.ADVANCED_PREGNANCY && pregnancyWeek < HospitalConstants.ALMOST_BIRTH)
+            return "Tra_32_e_38";
+        else
+            return "Oltre_38";
     }
 }

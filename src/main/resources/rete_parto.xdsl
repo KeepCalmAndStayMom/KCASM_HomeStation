@@ -12,24 +12,34 @@
 			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
 		</cpt>
 		<decision id="Ospedale">
-			<state id="Andare" />
 			<state id="Non_andare" />
+			<state id="Prepararsi" />
+			<state id="Andare" />
 		</decision>
 		<cpt id="Distanza">
 			<state id="Meno_di_3_kilometri" />
 			<state id="Tra_3_e_10_kilometri" />
 			<state id="Oltre_10_kilometri" />
-			<probabilities>0.2 0.4500000000000001 0.35</probabilities>
+			<probabilities>0.2 0.35 0.45</probabilities>
+		</cpt>
+		<cpt id="Settimana_gravidanza">
+			<state id="Meno_di_26" />
+			<state id="Tra_26_e_32" />
+			<state id="Tra_32_e_38" />
+			<state id="Oltre_38" />
+			<probabilities>0.25 0.25 0.25 0.25</probabilities>
 		</cpt>
 		<cpt id="Parto">
+			<state id="Impossibile" />
 			<state id="Improbabile" />
 			<state id="Probabile" />
-			<parents>Contrazione</parents>
-			<probabilities>0.5 0.5 0.99 0.01000000000000001 0.99 0.01000000000000001 0.25 0.75 0.1 0.9 0.17 0.83</probabilities>
+			<state id="Imminente" />
+			<parents>Contrazione Settimana_gravidanza</parents>
+			<probabilities>0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 1 0 0 0 0.99 0.01000000000000001 0 0 0.95 0.04 0.01 0 0.9 0.06 0.03 0.01 0.99 0.01 0 0 0.98 0.02 0 0 0.9299999999999999 0.05 0.02 0 0.8599999999999999 0.07000000000000001 0.05 0.02 0.98 0.02000000000000002 0 0 0.97 0.03000000000000003 0 0 0.05 0.8 0.1499999999999999 0 0.01 0.003 0.287 0.7 0.96 0.04000000000000004 0 0 0.95 0.05000000000000004 0 0 0.01 0.009999999999999967 0.9 0.08 0 0.001 0.01900000000000002 0.98 0.97 0.03000000000000002 0 0 0.96 0.04000000000000004 0 0 0.03 0.04 0.88 0.04999999999999993 0.005 0.002 0.143 0.85</probabilities>
 		</cpt>
 		<utility id="Utility">
 			<parents>Distanza Ospedale Parto</parents>
-			<utilities>0.3 0.7 0.7 0.2 0.2 0.8 0.8 0.1 0.1 0.9 1 0</utilities>
+			<utilities>0.998 0.7 0 0 0.7 0.2 0 0 0 0 0 0 0.999 0.8 0 0 0.8 0.1 0 0 0 0 0 0 1 0.9 0 0 1 0 0 0 0 0 0 0</utilities>
 		</utility>
 	</nodes>
 	<extensions>
@@ -39,35 +49,47 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>521 25 661 85</position>
+				<position>269 90 409 150</position>
 			</node>
 			<node id="Ospedale">
 				<name>Ospedale</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>302 159 397 220</position>
+				<position>299 241 394 302</position>
 			</node>
 			<node id="Distanza">
 				<name>Distanza</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>52 165 169 231</position>
+				<position>56 239 173 305</position>
 			</node>
 			<node id="Utility">
 				<name>Utility</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>288 339 406 431</position>
+				<position>287 401 405 493</position>
 			</node>
 			<node id="Parto">
 				<name>Parto</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>535 173 647 236</position>
+				<position>530 242 642 305</position>
+			</node>
+			<textbox>
+				<caption>Saranno sempre in evidenza grazie all&apos;algoritmo che calcola se e che tipo di contrazione si verifica in 30 minuti tenendo conto della settimana di gravidanza e della possibile attività fisica, quindi non serve aggiungere un arco da Settimana_gravidanza</caption>
+				<font color="000000" name="Arial" size="12" />
+				<position>387 20 864 92</position>
+			</textbox>
+			<node id="Settimana_gravidanza">
+				<name>Settimana_gravidanza</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial Narrow" size="12" />
+				<position>741 85 890 148</position>
 			</node>
 		</genie>
 	</extensions>

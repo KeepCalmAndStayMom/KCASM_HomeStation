@@ -86,7 +86,6 @@ public class HospitalThread extends Thread {
 
             try {
                 Thread.sleep(HospitalConstants.SAMPLING_FREQUENCY);
-                System.out.println("Riparte il campionamento ecc");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -95,29 +94,35 @@ public class HospitalThread extends Thread {
 
     private void printValues(Network net) {
         double[] contrValues = net.getNodeValue("Contrazione");
-            System.out.println("__________________\nContrazione");
-            for (int i = 0; i < contrValues.length; i ++) {
-                System.out.println(net.getOutcomeId("Contrazione", i) + " = " + (int) (contrValues[i] * 100) + "%");
-            }
+        System.out.println("__________________\nContrazione");
+        for (int i = 0; i < contrValues.length; i ++) {
+            System.out.println(net.getOutcomeId("Contrazione", i) + " = " + (int) (contrValues[i] * 100) + "%");
+        }
 
-            double[] birthValues = net.getNodeValue("Parto");
-            System.out.println("__________________\nParto");
-            for (int i = 0; i < birthValues.length; i ++) {
-                System.out.println(net.getOutcomeId("Parto", i) + " = " + (int) (birthValues[i] * 100) + "%");
-            }
+        double[] weekValues = net.getNodeValue("Settimana_gravidanza");
+        System.out.println("__________________\nSettimana_gravidanza");
+        for (int i = 0; i < weekValues.length; i ++) {
+            System.out.println(net.getOutcomeId("Settimana_gravidanza", i) + " = " + (int) (weekValues[i] * 100) + "%");
+        }
 
-            double[] distanceValues = net.getNodeValue("Distanza");
-            System.out.println("__________________\nDistanza");
-            for (int i = 0; i < distanceValues.length; i ++) {
-                System.out.println(net.getOutcomeId("Distanza", i) + " = " + (int) (distanceValues[i] * 100) + "%");
-            }
+        double[] birthValues = net.getNodeValue("Parto");
+        System.out.println("__________________\nParto");
+        for (int i = 0; i < birthValues.length; i ++) {
+            System.out.println(net.getOutcomeId("Parto", i) + " = " + (int) (birthValues[i] * 100) + "%");
+        }
 
-            double[] decisionValues = net.getNodeValue("Ospedale");
-            System.out.println("__________________\nOspedale");
-            for (int i = 0; i < decisionValues.length; i ++) {
-                System.out.println(net.getOutcomeId("Ospedale", i) + " = " + (int) (decisionValues[i] * 100));
-            }
-            System.out.println("__________________");
+        double[] distanceValues = net.getNodeValue("Distanza");
+        System.out.println("__________________\nDistanza");
+        for (int i = 0; i < distanceValues.length; i ++) {
+            System.out.println(net.getOutcomeId("Distanza", i) + " = " + (int) (distanceValues[i] * 100) + "%");
+        }
+
+        double[] decisionValues = net.getNodeValue("Ospedale");
+        System.out.println("__________________\nOspedale");
+        for (int i = 0; i < decisionValues.length; i ++) {
+            System.out.println(net.getOutcomeId("Ospedale", i) + " = " + decisionValues[i]);
+        }
+        System.out.println("__________________");
     }
 
     //poiché nel DB la data di inizio gravidanza non può essere null, verrà sempre trovata
