@@ -39,7 +39,7 @@
 		</cpt>
 		<utility id="Utility">
 			<parents>Distanza Ospedale Parto</parents>
-			<utilities>0.9 0.7 0.3 0.1 0.2 0.3 0.55 0.85 0.1 0.15 0.7 0.9 0.95 0.8 0.25 0.05 0.15 0.25 0.6 0.9 0.05 0.1 0.75 0.95 1 0.9 0.2 0 0.1 0.2 0.65 0.95 0 0.05 0.8 1</utilities>
+			<utilities>0.9 0.7 0.3 0.1 0.2 0.3 0.65 0.85 0.1 0.15 0.6 0.9 0.95 0.8 0.25 0.05 0.15 0.25 0.7 0.9 0.05 0.1 0.65 0.95 1 0.9 0.2 0 0.1 0.2 0.75 0.95 0 0.05 0.7 1</utilities>
 		</utility>
 	</nodes>
 	<extensions>
@@ -49,48 +49,59 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>269 90 409 150</position>
+				<position>348 165 488 225</position>
+				<barchart active="true" width="128" height="154" />
 			</node>
 			<node id="Ospedale">
 				<name>Ospedale</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>299 241 394 302</position>
+				<position>293 327 388 388</position>
+				<barchart active="true" width="128" height="88" />
 			</node>
 			<node id="Distanza">
 				<name>Distanza</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>56 239 173 305</position>
+				<position>41 326 158 392</position>
+				<barchart active="true" width="128" height="88" />
 			</node>
 			<node id="Utility">
 				<name>Utility</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>287 401 405 493</position>
+				<position>283 495 401 587</position>
+				<barchart active="true" />
 			</node>
 			<node id="Parto">
 				<name>Parto</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>530 242 642 305</position>
+				<position>551 314 663 377</position>
+				<barchart active="true" width="128" height="110" />
 			</node>
 			<textbox>
-				<caption>Saranno sempre in evidenza grazie all&apos;algoritmo che calcola se e che tipo di contrazione si verifica in 30 minuti tenendo conto della settimana di gravidanza e della possibile attività fisica, quindi non serve aggiungere un arco da Settimana_gravidanza</caption>
+				<caption>Contrazione e Settimana_gravidanza saranno sempre in evidenza grazie all&apos;algoritmo in ContractionEvaluation che calcola se e che tipo di contrazione si verifica in 30 minuti tenendo conto della settimana di gravidanza e della possibile attività fisica, quindi non serve aggiungere un arco da Settimana_gravidanza a Contrazione</caption>
 				<font color="000000" name="Arial" size="12" />
-				<position>387 20 864 92</position>
+				<position>311 18 788 108</position>
 			</textbox>
 			<node id="Settimana_gravidanza">
 				<name>Settimana_gravidanza</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial Narrow" size="12" />
-				<position>741 85 890 148</position>
+				<position>726 151 875 214</position>
+				<barchart active="true" width="128" height="120" />
 			</node>
+			<textbox>
+				<caption>Sempre in evidenza grazie a DistanceEvaluation</caption>
+				<font color="000000" name="Arial" size="12" />
+				<position>4 263 202 299</position>
+			</textbox>
 		</genie>
 	</extensions>
 </smile>
