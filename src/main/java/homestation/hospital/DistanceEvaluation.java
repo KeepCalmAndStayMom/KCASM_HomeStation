@@ -83,7 +83,7 @@ class DistanceEvaluation {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return "";
+            return "Oltre_10_kilometri";
         }
     }
 }
