@@ -41,4 +41,8 @@ public class HeartRate extends Fitbit {
             avg += i.heartbeat;
         return avg/heartbeats.size();
     }
+
+    public ArrayList<SamplingHeartbeat> getHeartbeats() {
+        return heartbeats;
+    }
 }
