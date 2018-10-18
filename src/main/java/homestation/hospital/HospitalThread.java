@@ -1,16 +1,13 @@
 package homestation.hospital;
 
 import com.google.gson.Gson;
-import homestation.HomestationSettings;
 import homestation.fitbit.SamplingHeartbeat;
 import smile.Network;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
@@ -76,10 +73,12 @@ public class HospitalThread extends Thread {
             //calcolo la distanza: uso la API di geocoding per ottenere le coordinate, poi uso la API di routing passando le coordinate per ottenere la distanza
             DistanceEvaluation.calculateDistance(net);
 
-            //calcolo la EU di andare e non andare in ospedale, se è meglio andare il bot di Telegram manda una notifica
+            //calcolo la EU di andare e non andare in ospedale, se è meglio andare o prepararsi viene mandata una notifica
             net.updateBeliefs();
 
-            //printValues(net);
+            //sendNotifications(net);
+
+            printValues(net);
 
             //pulisco le evidenze nella rete, dopodiché attendo mezz'ora e poi ricomincio
             net.clearAllEvidence();
@@ -145,6 +144,23 @@ public class HospitalThread extends Thread {
             PREGNANCY_START = LocalDate.parse((String) map.get("data_inizio_gravidanza"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void sendNotifications(Network net) {
+        double[] decisionValues = net.getNodeValue("Ospedale");
+
+        if (decisionValues[2] >= decisionValues[0] && decisionValues[2] >= decisionValues[1]) {
+            String notification = "Ti conviene andare in ospedale, il parto è imminente!";
+            Emailer.sendEmail(notification);
+            //SMSNotificator.sendSMS(notification);
+            //messaggio su DB
+        }
+        else if (decisionValues[1] >= decisionValues[0] && decisionValues[1] >= decisionValues[0]) {
+            String notification = "Ti conviene iniziare a preparare le valigie!";
+            Emailer.sendEmail(notification);
+            //SMSNotificator.sendSMS(notification);
+            //messaggio su DB
         }
     }
 }
