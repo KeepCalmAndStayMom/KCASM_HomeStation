@@ -27,7 +27,7 @@ class DistanceEvaluation {
 
         hospital = executeRequest("geocoding hospital", hospital, null);
 
-        net.setEvidence("Distanza", executeRequest("route", home, hospital));
+        net.setEvidence(HospitalConstants.DISTANCE_NODE, executeRequest("route", home, hospital));
     }
 
     private static String executeRequest(String type, String param1, String param2) {
@@ -69,12 +69,12 @@ class DistanceEvaluation {
                     double distance = route.getPaths().get(0).getDistance() / 1000;
                     int time = route.getPaths().get(0).getTime();
                     System.out.println("Distanza in kilometri: " + distance + "; tempo in secondi: " + time);
-                    if (distance < 3)
-                        return "Meno_di_3_kilometri";
-                    else if (distance >= 3 && distance < 10)
-                        return "Tra_3_e_10_kilometri";
+                    if (distance < HospitalConstants.NEAR)
+                        return HospitalConstants.SHORT_DISTANCE;
+                    else if (distance >= HospitalConstants.NEAR && distance < HospitalConstants.FAR)
+                        return HospitalConstants.MEDIUM_DISTANCE;
                     else
-                        return "Oltre_10_kilometri";
+                        return HospitalConstants.LONG_DISTANCE;
                 default:
                     GeocodingResponse geo = gson.fromJson(result.toString(), GeocodingResponse.class);
                     double lat = geo.getHits().get(0).getPoint().getLat();
@@ -83,7 +83,7 @@ class DistanceEvaluation {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return "Oltre_10_kilometri";
+            return HospitalConstants.LONG_DISTANCE;
         }
     }
 }

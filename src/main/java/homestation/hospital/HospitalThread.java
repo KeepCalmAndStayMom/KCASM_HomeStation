@@ -14,7 +14,7 @@ import java.util.*;
 
 public class HospitalThread extends Thread {
 
-    private LocalDate PREGNANCY_START = null;
+    private LocalDate pregnancyStart;
 
     @Override
     public void run() {
@@ -68,7 +68,7 @@ public class HospitalThread extends Thread {
                     CreateSamplingHeartbeatTestList.createRealisticList1(l);
                     break;
             }
-            ContractionEvaluation.calculateContraction(l, net, PREGNANCY_START);
+            ContractionEvaluation.calculateContraction(l, net, pregnancyStart);
 
             //calcolo la distanza: uso la API di geocoding per ottenere le coordinate, poi uso la API di routing passando le coordinate per ottenere la distanza
             DistanceEvaluation.calculateDistance(net);
@@ -84,24 +84,25 @@ public class HospitalThread extends Thread {
             net.clearAllEvidence();
 
             try {
-                Thread.sleep(HospitalConstants.SAMPLING_FREQUENCY);
+                Thread.sleep(HospitalConstants.CONTRACTION_EVALUATION_FREQUENCY);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    //metodo temporaneo di test che stampa tutte le probabilità degli outcome
     private void printValues(Network net) {
-        double[] contrValues = net.getNodeValue("Contrazione");
+        double[] contrValues = net.getNodeValue(HospitalConstants.CONTRACTION_NODE);
         System.out.println("__________________\nContrazione");
         for (int i = 0; i < contrValues.length; i ++) {
-            System.out.println(net.getOutcomeId("Contrazione", i) + " = " + (int) (contrValues[i] * 100) + "%");
+            System.out.println(net.getOutcomeId(HospitalConstants.CONTRACTION_NODE, i) + " = " + (int) (contrValues[i] * 100) + "%");
         }
 
-        double[] weekValues = net.getNodeValue("Settimana_gravidanza");
+        double[] weekValues = net.getNodeValue(HospitalConstants.PREGNANCY_WEEK_NODE);
         System.out.println("__________________\nSettimana_gravidanza");
         for (int i = 0; i < weekValues.length; i ++) {
-            System.out.println(net.getOutcomeId("Settimana_gravidanza", i) + " = " + (int) (weekValues[i] * 100) + "%");
+            System.out.println(net.getOutcomeId(HospitalConstants.PREGNANCY_WEEK_NODE, i) + " = " + (int) (weekValues[i] * 100) + "%");
         }
 
         double[] birthValues = net.getNodeValue("Parto");
@@ -110,21 +111,21 @@ public class HospitalThread extends Thread {
             System.out.println(net.getOutcomeId("Parto", i) + " = " + (int) (birthValues[i] * 100) + "%");
         }
 
-        double[] distanceValues = net.getNodeValue("Distanza");
+        double[] distanceValues = net.getNodeValue(HospitalConstants.DISTANCE_NODE);
         System.out.println("__________________\nDistanza");
         for (int i = 0; i < distanceValues.length; i ++) {
-            System.out.println(net.getOutcomeId("Distanza", i) + " = " + (int) (distanceValues[i] * 100) + "%");
+            System.out.println(net.getOutcomeId(HospitalConstants.DISTANCE_NODE, i) + " = " + (int) (distanceValues[i] * 100) + "%");
         }
 
-        double[] decisionValues = net.getNodeValue("Ospedale");
+        double[] decisionValues = net.getNodeValue(HospitalConstants.HOSPITAL_DECISION_NODE);
         System.out.println("__________________\nOspedale");
         for (int i = 0; i < decisionValues.length; i ++) {
-            System.out.println(net.getOutcomeId("Ospedale", i) + " = " + decisionValues[i]);
+            System.out.println(net.getOutcomeId(HospitalConstants.HOSPITAL_DECISION_NODE, i) + " = " + decisionValues[i]);
         }
         System.out.println("__________________");
     }
 
-    //poiché nel DB la data di inizio gravidanza non può essere null, verrà sempre trovata
+    //poiché nel DB la data di inizio gravidanza non può essere null, verrà sempre trovata, ma se per qualche ragione c'è un errore verrà settata la data odierna
     private void setPregnancyStart() {
         try {
             StringBuilder result = new StringBuilder();
@@ -141,25 +142,24 @@ public class HospitalThread extends Thread {
             rd.close();
 
             HashMap map = new Gson().fromJson(result.toString(), HashMap.class);
-            PREGNANCY_START = LocalDate.parse((String) map.get("data_inizio_gravidanza"));
+            pregnancyStart = LocalDate.parse((String) map.get("data_inizio_gravidanza"));
         } catch (IOException e) {
             e.printStackTrace();
+            pregnancyStart = LocalDate.now();
         }
     }
 
     private void sendNotifications(Network net) {
-        double[] decisionValues = net.getNodeValue("Ospedale");
+        double[] decisionValues = net.getNodeValue(HospitalConstants.HOSPITAL_DECISION_NODE);
 
         if (decisionValues[2] >= decisionValues[0] && decisionValues[2] >= decisionValues[1]) {
-            String notification = "Ti conviene andare in ospedale, il parto è imminente!";
-            Emailer.sendEmail(notification);
-            //SMSNotificator.sendSMS(notification);
+            Emailer.sendEmail(HospitalConstants.GO);
+            //SMSNotificator.sendSMS(HospitalConstants.GO);
             //messaggio su DB
         }
         else if (decisionValues[1] >= decisionValues[0] && decisionValues[1] >= decisionValues[0]) {
-            String notification = "Ti conviene iniziare a preparare le valigie!";
-            Emailer.sendEmail(notification);
-            //SMSNotificator.sendSMS(notification);
+            Emailer.sendEmail(HospitalConstants.PREPARE);
+            //SMSNotificator.sendSMS(HospitalConstants.PREPARE);
             //messaggio su DB
         }
     }

@@ -37,8 +37,8 @@ class ContractionEvaluation {
         //int pregnancyWeek = gravidanza4;
 
         if (pregnancyWeek < HospitalConstants.CONTRACTION_BEGINNING_ESTIMATION) {
-            net.setEvidence("Contrazione", "Nessuna");
-            net.setEvidence("Settimana_gravidanza", "Meno_di_26");
+            net.setEvidence(HospitalConstants.CONTRACTION_NODE, HospitalConstants.NO_CONTRACTION);
+            net.setEvidence(HospitalConstants.PREGNANCY_WEEK_NODE, HospitalConstants.STARTING_PREGNANCY);
             return;
         }
 
@@ -48,8 +48,8 @@ class ContractionEvaluation {
 
         samplingEvaluation(evaluationList, pregnancyWeek);
         
-        net.setEvidence("Contrazione", contractionTypeEvaluation());
-        net.setEvidence("Settimana_gravidanza", PregnancyTimeEvaluation(pregnancyWeek));
+        net.setEvidence(HospitalConstants.CONTRACTION_NODE, contractionTypeEvaluation());
+        net.setEvidence(HospitalConstants.PREGNANCY_WEEK_NODE, PregnancyTimeEvaluation(pregnancyWeek));
 
         System.out.println("nessuna: " + nNoContr);
         System.out.println("falsa: " + nFalseContr);
@@ -262,10 +262,10 @@ class ContractionEvaluation {
     //modificabile nello stesso modo di contractionTypeEvaluation
     private static String PregnancyTimeEvaluation(int pregnancyWeek) {
         if (pregnancyWeek >= HospitalConstants.CONTRACTION_BEGINNING_ESTIMATION && pregnancyWeek < HospitalConstants.ADVANCED_PREGNANCY)
-            return "Tra_26_e_32";
+            return HospitalConstants.EARLY_PREGNANCY;
         else if (pregnancyWeek >= HospitalConstants.ADVANCED_PREGNANCY && pregnancyWeek < HospitalConstants.ALMOST_BIRTH)
-            return "Tra_32_e_38";
+            return HospitalConstants.LATE_PREGNANCY;
         else
-            return "Oltre_38";
+            return HospitalConstants.ENDING_PREGNANCY;
     }
 }
