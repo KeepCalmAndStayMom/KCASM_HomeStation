@@ -42,6 +42,13 @@ class ContractionEvaluation {
             return;
         }
 
+        net.setEvidence(HospitalConstants.PREGNANCY_WEEK_NODE, PregnancyTimeEvaluation(pregnancyWeek));
+
+        if (l == null || l.size() == 0) {
+            net.setEvidence(HospitalConstants.CONTRACTION_NODE, HospitalConstants.NO_FITBIT);
+            return;
+        }
+
         ArrayList<ArrayList<SamplingHeartbeat>> evaluationList = samplingScan(l);
 
         System.out.println(evaluationList);
@@ -49,7 +56,6 @@ class ContractionEvaluation {
         samplingEvaluation(evaluationList, pregnancyWeek);
         
         net.setEvidence(HospitalConstants.CONTRACTION_NODE, contractionTypeEvaluation());
-        net.setEvidence(HospitalConstants.PREGNANCY_WEEK_NODE, PregnancyTimeEvaluation(pregnancyWeek));
 
         System.out.println("nessuna: " + nNoContr);
         System.out.println("falsa: " + nFalseContr);

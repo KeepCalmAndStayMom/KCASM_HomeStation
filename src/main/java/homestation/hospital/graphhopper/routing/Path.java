@@ -3,21 +3,11 @@ package homestation.hospital.graphhopper.routing;
 import com.google.api.client.util.Key;
 
 public class Path {
+    @Key
+    private double distance;
 
     @Key
-    double distance;
-
-    @Key
-    double weight;
-
-    @Key
-    int time;
-
-    @Key
-    int transfers;
-
-    @Key
-    String snapped_waypoints;
+    private int time;
 
     public double getDistance() {
         return distance;
@@ -25,10 +15,5 @@ public class Path {
 
     public int getTime() {
         return time;
-    }
-
-    @Override
-    public String toString() {
-        return "distance: " + distance + "; time: " + time + "; weight: " + weight + "; transfers: " + transfers + "; snapped waypoints: " + snapped_waypoints;
     }
 }

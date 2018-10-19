@@ -6,11 +6,11 @@ import javax.mail.internet.*;
 
 class Emailer {
     static void sendEmail(String content) {
-        //from e password da account Gmail, to è da prendere da DB e il resto dipende dalle costanti in HospitalConstants
-        createAndSend("kandstaymom@gmail.com", "KCASM_96", "paul.lamberto@hotmail.com", HospitalConstants.SUBJECT, content);
+        //to è da prendere da DB
+        createAndSend("paul.lamberto@hotmail.com", content);
     }
 
-    private static void createAndSend(String from, String password, String to, String sub, String msg) {
+    private static void createAndSend(String to, String msg) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -21,14 +21,14 @@ class Emailer {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(from,password);
+                        return new PasswordAuthentication("kandstaymom@gmail.com", "KCASM_96");
                     }
                 });
 
         try {
             MimeMessage message = new MimeMessage(session);
-            message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
-            message.setSubject(sub);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject(HospitalConstants.SUBJECT);
             message.setText(msg);
 
             Transport.send(message);

@@ -17,7 +17,7 @@ class SMSNotificator {
 
         //from costante (da account Nexmo), to è da prendere da DB ed è anche da verificare sul sito di Nexmo prima
         try {
-            client.getSmsClient().submitMessage(new TextMessage("+393442298522","+393347437264", content));
+            client.getSmsClient().submitMessage(new TextMessage("+393442298522", "+393347437264", content));
             System.out.println("SMS inviato correttamente");
         } catch (NexmoClientException | IOException e) {
             e.printStackTrace();

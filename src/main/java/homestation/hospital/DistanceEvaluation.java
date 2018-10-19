@@ -81,9 +81,9 @@ class DistanceEvaluation {
                     double lng = geo.getHits().get(0).getPoint().getLng();
                     return lat + "," + lng;
             }
-        } catch (IOException e) {
+        } catch (IOException | IndexOutOfBoundsException e) {
             e.printStackTrace();
-            return HospitalConstants.LONG_DISTANCE;
+            return HospitalConstants.SHORT_DISTANCE;
         }
     }
 }
