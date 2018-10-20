@@ -1,6 +1,7 @@
 package homestation.hospital;
 
 import com.google.gson.Gson;
+import homestation.HomestationSettings;
 import homestation.fitbit.SamplingHeartbeat;
 import smile.Network;
 
@@ -14,7 +15,7 @@ import java.util.*;
 
 public class HospitalThread extends Thread {
 
-    private LocalDate pregnancyStart;
+    private LocalDate pregnancyStart = HomestationSettings.PREGNANCY_START_DATE;
 
     @Override
     public void run() {
@@ -40,8 +41,6 @@ public class HospitalThread extends Thread {
 
         Network net = new Network();
         net.readFile("src/main/resources/rete_parto.xdsl");
-
-        setPregnancyStart();
 
         while (true) {
             //chiedo a Fitbit i dati dell'ultima mezz'ora (qui ci sono liste già pronte per i test ma nell'applicazione reale uso la API di Fitbit)
@@ -76,9 +75,9 @@ public class HospitalThread extends Thread {
             //calcolo la EU di andare e non andare in ospedale, se è meglio andare o prepararsi viene mandata una notifica
             net.updateBeliefs();
 
-            //sendNotifications(net);
-
             printValues(net);
+
+            sendNotifications(net);
 
             //pulisco le evidenze nella rete, dopodiché attendo mezz'ora e poi ricomincio
             net.clearAllEvidence();
@@ -125,42 +124,22 @@ public class HospitalThread extends Thread {
         System.out.println("__________________");
     }
 
-    //poiché nel DB la data di inizio gravidanza non può essere null, verrà sempre trovata, ma se per qualche ragione c'è un errore verrà settata la data odierna
-    private void setPregnancyStart() {
-        try {
-            StringBuilder result = new StringBuilder();
-            URL url = new URL(HospitalConstants.INITIAL_DATE_URL);
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
-            }
-            rd.close();
-
-            HashMap map = new Gson().fromJson(result.toString(), HashMap.class);
-            pregnancyStart = LocalDate.parse((String) map.get("data_inizio_gravidanza"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            pregnancyStart = LocalDate.now();
-        }
-    }
-
     private void sendNotifications(Network net) {
         double[] decisionValues = net.getNodeValue(HospitalConstants.HOSPITAL_DECISION_NODE);
 
         if (decisionValues[2] >= decisionValues[0] && decisionValues[2] >= decisionValues[1]) {
-            Emailer.sendEmail(HospitalConstants.GO);
+            System.out.println("Meglio andare");
+            //Emailer.sendEmail(HospitalConstants.GO);
             //SMSNotificator.sendSMS(HospitalConstants.GO);
             //messaggio su DB
         }
-        else if (decisionValues[1] >= decisionValues[0] && decisionValues[1] >= decisionValues[0]) {
-            Emailer.sendEmail(HospitalConstants.PREPARE);
+        else if (decisionValues[1] >= decisionValues[0] && decisionValues[1] > decisionValues[2]) {
+            System.out.println("Meglio prepararsi");
+            //Emailer.sendEmail(HospitalConstants.PREPARE);
             //SMSNotificator.sendSMS(HospitalConstants.PREPARE);
             //messaggio su DB
         }
+        else
+            System.out.println("Meglio stare a casa");
     }
 }

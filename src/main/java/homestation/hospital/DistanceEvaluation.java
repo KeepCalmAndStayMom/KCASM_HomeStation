@@ -15,6 +15,8 @@ import java.util.Map;
 
 class DistanceEvaluation {
 
+    /*se si decide di prendere da file e non più da db i due indirizzi (la paziente li cambia dal client, ma si suppone che lo farà solo in caso di traferimento e sarà il tecnico a modificare il file prima di riavviare la homestation),
+    aggiungere due nuovi campi coordinate casa e ospedale che vengono aggiornati da executeRequest, il quale perderà il caso "user" nello switch*/
     private static String home;
     private static String hospital;
     private static Gson gson = new Gson();

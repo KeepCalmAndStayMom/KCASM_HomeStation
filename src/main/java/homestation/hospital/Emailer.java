@@ -1,13 +1,18 @@
 package homestation.hospital;
 
+import homestation.HomestationSettings;
+
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
 class Emailer {
+
+    private static String mailTo = HomestationSettings.EMAIL_USER;
+
     static void sendEmail(String content) {
         //to è da prendere da DB
-        createAndSend("paul.lamberto@hotmail.com", content);
+        createAndSend(mailTo, content);
     }
 
     private static void createAndSend(String to, String msg) {
