@@ -57,13 +57,10 @@ class HospitalConstants {
     final static String MEDIUM_DISTANCE = "Tra_3_e_10_kilometri";
     final static String LONG_DISTANCE = "Oltre_10_kilometri";
 
-    //urls for our APIs
-    final private static String API_URL_BEGINNING = "http://localhost:4567/api/";
-    final static String USER_URL = API_URL_BEGINNING + "users/" + HomestationSettings.HOMESTATION_ID;
-    final static String INITIAL_DATE_URL = API_URL_BEGINNING + "users/initial_date/" + HomestationSettings.HOMESTATION_ID;
-    final static String ACTIVITIES_URL = API_URL_BEGINNING + "activities/" + HomestationSettings.HOMESTATION_ID + "/";
+    //Activities API URL
+    final static String ACTIVITIES_URL = "http://localhost:4567/api/activities/" + HomestationSettings.HOMESTATION_ID + "/";
 
-    //urls for graphhopper APIs
+    //URLs for graphhopper APIs
     final private static String GRAPHHOPPER_API_KEY = "bf9cc82a-9a44-47a0-91c1-f5172afbf136";
     final private static String GRAPHHOPPER_URL_START = "https://graphhopper.com/api/1/";
     final static String GEO_API_PARAMS_START = GRAPHHOPPER_URL_START + "geocode?q=";
@@ -76,5 +73,4 @@ class HospitalConstants {
     final static String GO = "Il parto è imminente! Vai in ospedale!" + END_MESSAGE;
     final static String PREPARE = "È conveniente iniziare a preparare le valigie, il parto è probabile!" + END_MESSAGE;
     final static String SUBJECT = "Notifica parto";
-
 }

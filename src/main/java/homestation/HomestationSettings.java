@@ -34,16 +34,21 @@ public class HomestationSettings {
 
     public static String BROKER_URL;
 
-    public static String EMAIL_USER;
-    public static LocalDate PREGNANCY_START_DATE;
+    public static String EMAIL_KCASM;
+    public static String PASSWORD_KCASM;
 
-    public static String PHONE_NUMBER_USER;
     public static String NEXMO_PHONE_NUMBER;
     public static String NEXMO_API_KEY;
     public static String NEXMO_API_SECRET;
 
+    public static String EMAIL_USER;
+    public static LocalDate PREGNANCY_START_DATE;
+    public static String PHONE_NUMBER_USER;
+    public static String HOME_ADDRESS;
+    public static String HOSPITAL_ADDRESS;
+
     static void createSettings() {
-        Map settings = new Gson().fromJson(jsonFromFile(), Map.class);
+        Map settings = new Gson().fromJson(jsonFromFile("src/main/resources/settings.json"), Map.class);
 
         HOMESTATION_ID = ((Double)settings.get("HOMESTATION_ID")).intValue();
         SENSOR_NODE = ((Double)settings.get("SENSOR_NODE")).intValue();
@@ -57,19 +62,26 @@ public class HomestationSettings {
         USERNAME = String.valueOf(settings.get("USERNAME"));
         PASSWORD = String.valueOf(settings.get("PASSWORD"));
         BROKER_URL = String.valueOf(settings.get("BROKER_URL"));
-        EMAIL_USER = String.valueOf(settings.get("EMAIL_USER"));
-        PREGNANCY_START_DATE = LocalDate.parse(String.valueOf(settings.get("PREGNANCY_START_DATE")));
-        PHONE_NUMBER_USER = String.valueOf(settings.get("PHONE_NUMBER_USER"));
+        EMAIL_KCASM = String.valueOf(settings.get("EMAIL_KCASM"));
+        PASSWORD_KCASM = String.valueOf(settings.get("PASSWORD_KCASM"));
         NEXMO_PHONE_NUMBER = String.valueOf(settings.get("NEXMO_PHONE_NUMBER"));
         NEXMO_API_KEY = String.valueOf(settings.get("NEXMO_API_KEY"));
         NEXMO_API_SECRET = String.valueOf(settings.get("NEXMO_API_SECRET"));
+
+        settings = new Gson().fromJson(jsonFromFile("src/main/resources/user_settings.json"), Map.class);
+
+        EMAIL_USER = String.valueOf(settings.get("EMAIL_USER"));
+        PREGNANCY_START_DATE = LocalDate.parse(String.valueOf(settings.get("PREGNANCY_START_DATE")));
+        PHONE_NUMBER_USER = String.valueOf(settings.get("PHONE_NUMBER_USER"));
+        HOME_ADDRESS = String.valueOf(settings.get("HOME_ADDRESS"));
+        HOSPITAL_ADDRESS = String.valueOf(settings.get("HOSPITAL_ADDRESS"));
     }
 
-    private static String jsonFromFile() {
+    private static String jsonFromFile(String filePath) {
         StringBuilder builder = new StringBuilder();
 
         try {
-            Scanner scan = new Scanner(new File("C:\\Users\\Paolo\\IdeaProjects\\KCASM_HomeStation\\src\\main\\resources\\settings.json"));
+            Scanner scan = new Scanner(new File(filePath));
         while(scan.hasNext())
             builder.append(scan.next());
         } catch (FileNotFoundException e) {

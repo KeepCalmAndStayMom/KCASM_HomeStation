@@ -26,7 +26,7 @@ class Emailer {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("kandstaymom@gmail.com", "KCASM_96");
+                        return new PasswordAuthentication(HomestationSettings.EMAIL_KCASM, HomestationSettings.PASSWORD_KCASM);
                     }
                 });
 

@@ -12,9 +12,8 @@
   "USERNAME": "admin",
   "PASSWORD": "raz4reti2",
   "BROKER_URL": "tcp://192.168.1.10:1883",
-  "EMAIL_USER": "paul.lamberto@hotmail.com",
-  "PREGNANCY_START_DATE": "2018-02-22",
-  "PHONE_NUMBER_USER": "+393347437264",
+  "EMAIL_KCASM": "kandstaymom@gmail.com",
+  "PASSWORD_KCASM": "KCASM_96",
   "NEXMO_PHONE_NUMBER": "+393442298522",
   "NEXMO_API_KEY": "635924f3",
   "NEXMO_API_SECRET": "577sIM8w7pdEYRyS"

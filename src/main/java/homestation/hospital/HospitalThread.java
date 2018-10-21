@@ -1,15 +1,9 @@
 package homestation.hospital;
 
-import com.google.gson.Gson;
 import homestation.HomestationSettings;
 import homestation.fitbit.SamplingHeartbeat;
 import smile.Network;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -42,6 +36,9 @@ public class HospitalThread extends Thread {
         Network net = new Network();
         net.readFile("src/main/resources/rete_parto.xdsl");
 
+        //calcolo la distanza: uso la API di geocoding per ottenere le coordinate, poi uso la API di routing passando le coordinate per ottenere la distanza
+        DistanceEvaluation.calculateDistance(net);
+
         while (true) {
             //chiedo a Fitbit i dati dell'ultima mezz'ora (qui ci sono liste già pronte per i test ma nell'applicazione reale uso la API di Fitbit)
             ArrayList<SamplingHeartbeat> l = new ArrayList<>();
@@ -69,18 +66,12 @@ public class HospitalThread extends Thread {
             }
             ContractionEvaluation.calculateContraction(l, net, pregnancyStart);
 
-            //calcolo la distanza: uso la API di geocoding per ottenere le coordinate, poi uso la API di routing passando le coordinate per ottenere la distanza
-            DistanceEvaluation.calculateDistance(net);
-
             //calcolo la EU di andare e non andare in ospedale, se è meglio andare o prepararsi viene mandata una notifica
             net.updateBeliefs();
 
             printValues(net);
 
             sendNotifications(net);
-
-            //pulisco le evidenze nella rete, dopodiché attendo mezz'ora e poi ricomincio
-            net.clearAllEvidence();
 
             try {
                 Thread.sleep(HospitalConstants.CONTRACTION_EVALUATION_FREQUENCY);
