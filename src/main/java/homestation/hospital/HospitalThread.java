@@ -120,13 +120,13 @@ public class HospitalThread extends Thread {
 
         if (decisionValues[2] >= decisionValues[0] && decisionValues[2] >= decisionValues[1]) {
             System.out.println("Meglio andare");
-            //Emailer.sendEmail(HospitalConstants.GO);
+            Emailer.sendEmail(HospitalConstants.GO);
             //SMSNotificator.sendSMS(HospitalConstants.GO);
             //messaggio su DB
         }
         else if (decisionValues[1] >= decisionValues[0] && decisionValues[1] > decisionValues[2]) {
             System.out.println("Meglio prepararsi");
-            //Emailer.sendEmail(HospitalConstants.PREPARE);
+            Emailer.sendEmail(HospitalConstants.PREPARE);
             //SMSNotificator.sendSMS(HospitalConstants.PREPARE);
             //messaggio su DB
         }
