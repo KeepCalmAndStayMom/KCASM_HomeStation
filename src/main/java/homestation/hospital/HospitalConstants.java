@@ -21,7 +21,7 @@ class HospitalConstants {
     final static int MINIMUM_FREQUENCY_STRONG = 3;//minutes
     final static int MAXIMUM_FREQUENCY_STRONG = 4;//minutes
 
-    final static int MINIMUM_DURATION_MODERATE = 30;//seconds
+    final static int MINIMUM_DURATION_MODERATE = 31;//seconds
     final static int MAXIMUM_DURATION_MODERATE = 90;//seconds
     final static int MINIMUM_DURATION_STRONG = 15;//seconds
     final static int MAXIMUM_DURATION_STRONG = 30;//seconds

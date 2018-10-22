@@ -1,6 +1,5 @@
 package homestation.hospital;
 
-import homestation.HomestationSettings;
 import homestation.fitbit.SamplingHeartbeat;
 import smile.Network;
 
@@ -111,7 +110,7 @@ class ContractionEvaluation {
     }
 
     private static void samplingEvaluation(ArrayList<ArrayList<SamplingHeartbeat>> evaluationList, int pregnancyWeek) {
-        boolean taskPresence = checkActivitiesInTheDay(); //usare API con categoria ginnastica e data di oggi
+        boolean taskPresence = checkActivitiesInTheDay();
 
         System.out.println(pregnancyWeek + " settimane, presenza task: " + taskPresence);
 
@@ -140,7 +139,7 @@ class ContractionEvaluation {
                     }
                     else {
                         if (pregnancyWeek >= HospitalConstants.ADVANCED_PREGNANCY) {
-                            if (previousDuration > HospitalConstants.MINIMUM_DURATION_MODERATE && previousDuration <= HospitalConstants.MAXIMUM_DURATION_MODERATE && previousMean <= HospitalConstants.PAIN_THRESHOLD) {
+                            if (previousDuration >= HospitalConstants.MINIMUM_DURATION_MODERATE && previousDuration <= HospitalConstants.MAXIMUM_DURATION_MODERATE && previousMean <= HospitalConstants.PAIN_THRESHOLD && pregnancyWeek < HospitalConstants.ALMOST_BIRTH) {
                                 previousList = lc;
                                 nModerateContr++;
                             }
@@ -179,7 +178,7 @@ class ContractionEvaluation {
                 }
                 else {
                     if (pregnancyWeek >= HospitalConstants.ADVANCED_PREGNANCY) {
-                        if (currentDuration > HospitalConstants.MINIMUM_DURATION_MODERATE && currentDuration <= HospitalConstants.MAXIMUM_DURATION_MODERATE && currentMean <= HospitalConstants.PAIN_THRESHOLD && pregnancyWeek < HospitalConstants.ALMOST_BIRTH) {
+                        if (currentDuration >= HospitalConstants.MINIMUM_DURATION_MODERATE && currentDuration <= HospitalConstants.MAXIMUM_DURATION_MODERATE && currentMean <= HospitalConstants.PAIN_THRESHOLD && pregnancyWeek < HospitalConstants.ALMOST_BIRTH) {
                             nModerateContr++;
                             compareWithPreviousContraction(HospitalConstants.MINIMUM_DURATION_MODERATE, HospitalConstants.MAXIMUM_DURATION_MODERATE, HospitalConstants.MINIMUM_FREQUENCY_MODERATE, HospitalConstants.MAXIMUM_FREQUENCY_MODERATE, currentDuration, currentMean, lc, "moderate");
                         }
