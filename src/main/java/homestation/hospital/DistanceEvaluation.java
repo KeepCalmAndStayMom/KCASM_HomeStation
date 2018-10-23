@@ -13,14 +13,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 class DistanceEvaluation {
-    private static String home = HomestationSettings.HOME_ADDRESS;
-    private static String hospital = HomestationSettings.HOSPITAL_ADDRESS;
+    private static String home = HomestationSettings.HOME_ADDRESS.replace('-', '+');
+    private static String hospital = HomestationSettings.HOSPITAL_ADDRESS.replace('-', '+');
     private static Gson gson = new Gson();
 
     static void calculateDistance(Network net) {
-        String homeCoordinates = executeRequest("geocoding house", home.replace('-', '+'), null);
+        String homeCoordinates = executeRequest("geocoding house", home, null);
 
-        String hospitalCoordinates = executeRequest("geocoding hospital", hospital.replace('-', '+'), null);
+        String hospitalCoordinates = executeRequest("geocoding hospital", hospital, null);
 
         net.setEvidence(HospitalConstants.DISTANCE_NODE, executeRequest("route", homeCoordinates, hospitalCoordinates));
     }

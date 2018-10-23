@@ -20,7 +20,7 @@
 			<state id="Meno_di_3_kilometri" />
 			<state id="Tra_3_e_10_kilometri" />
 			<state id="Oltre_10_kilometri" />
-			<probabilities>0.2 0.35 0.45</probabilities>
+			<probabilities>0.2 0.45 0.35</probabilities>
 		</cpt>
 		<cpt id="Settimana_gravidanza">
 			<state id="Meno_di_26" />
@@ -35,11 +35,11 @@
 			<state id="Probabile" />
 			<state id="Imminente" />
 			<parents>Contrazione Settimana_gravidanza</parents>
-			<probabilities>0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 1 0 0 0 0.99 0.01000000000000001 0 0 0.95 0.04 0.01 0 0.9 0.06 0.03 0.01 0.99 0.01 0 0 0.98 0.02 0 0 0.9299999999999999 0.05 0.02 0 0.8599999999999999 0.07000000000000001 0.05 0.02 0.98 0.02000000000000002 0 0 0.97 0.03000000000000003 0 0 0.05 0.8 0.1499999999999999 0 0.01 0.003 0.287 0.7 0.96 0.04000000000000004 0 0 0.95 0.05000000000000004 0 0 0.01 0.009999999999999967 0.9 0.08 0 0.001 0.01900000000000002 0.98 0.97 0.03000000000000002 0 0 0.96 0.04000000000000004 0 0 0.03 0.04 0.88 0.04999999999999993 0.002 0.005000000000000004 0.143 0.85</probabilities>
+			<probabilities>0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 1 0 0 0 0.99 0.01000000000000001 0 0 0.95 0.04 0.01 0 0.9 0.06 0.03 0.01 0.99 0.01 0 0 0.95 0.04 0.01000000000000004 0 0.85 0.09999999999999992 0.04000000000000009 0.01 0.75 0.15 0.06 0.04000000000000001 0.98 0.02000000000000002 0 0 0.9 0.07999999999999997 0.02 0 0.05 0.55 0.3999999999999999 0 0.01 0.03 0.45 0.51 0.96 0.04000000000000004 0 0 0.85 0.1 0.05000000000000002 0 0.01 0.009999999999999967 0.9 0.08 0 0.001 0.01900000000000002 0.98 0.97 0.03000000000000002 0 0 0.87 0.09 0.04000000000000001 0 0.03 0.04 0.88 0.04999999999999993 0.002 0.005000000000000004 0.1929999999999999 0.8</probabilities>
 		</cpt>
 		<utility id="Utility">
-			<parents>Distanza Ospedale Parto</parents>
-			<utilities>0.9 0.7 0.3 0.1 0.2 0.3 0.65 0.85 0.1 0.15 0.6 0.9 0.95 0.8 0.25 0.05 0.15 0.25 0.7 0.9 0.05 0.1 0.65 0.95 1 0.9 0.2 0 0.1 0.2 0.75 0.95 0 0.05 0.7 1</utilities>
+			<parents>Distanza Parto Ospedale</parents>
+			<utilities>0.9 0.2 0.1 0.7 0.3 0.15 0.3 0.7 0.6 0.1 0.8 0.9 0.95 0.15 0.05 0.8 0.25 0.1 0.25 0.75 0.65 0.05 0.85 0.95 1 0.1 0 0.9 0.2 0.05 0.2 0.8 0.7 0 0.9 1</utilities>
 		</utility>
 	</nodes>
 	<extensions>
@@ -49,58 +49,58 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>348 165 488 225</position>
-				<barchart active="true" width="128" height="154" />
+				<position>664 160 804 220</position>
+				<barchart active="true" width="242" height="154" />
 			</node>
 			<node id="Ospedale">
 				<name>Ospedale</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>293 327 388 388</position>
-				<barchart active="true" width="128" height="88" />
+				<position>614 382 709 443</position>
+				<barchart active="true" width="238" height="123" />
 			</node>
 			<node id="Distanza">
 				<name>Distanza</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>41 326 158 392</position>
-				<barchart active="true" width="128" height="88" />
+				<position>223 378 340 444</position>
+				<barchart active="true" width="358" height="123" />
 			</node>
 			<node id="Utility">
 				<name>Utility</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>283 495 401 587</position>
-				<barchart active="true" />
+				<position>605 603 723 695</position>
+				<barchart active="true" width="192" height="139" />
 			</node>
 			<node id="Parto">
 				<name>Parto</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="12" />
-				<position>551 314 663 377</position>
-				<barchart active="true" width="128" height="110" />
+				<position>948 380 1060 443</position>
+				<barchart active="true" width="217" height="129" />
 			</node>
 			<textbox>
 				<caption>Contrazione e Settimana_gravidanza saranno sempre in evidenza grazie all&apos;algoritmo in ContractionEvaluation che calcola se e che tipo di contrazione si verifica in 30 minuti tenendo conto della settimana di gravidanza e della possibile attività fisica, quindi non serve aggiungere un arco da Settimana_gravidanza a Contrazione</caption>
 				<font color="000000" name="Arial" size="12" />
-				<position>311 18 788 108</position>
+				<position>745 18 1222 108</position>
 			</textbox>
 			<node id="Settimana_gravidanza">
 				<name>Settimana_gravidanza</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial Narrow" size="12" />
-				<position>726 151 875 214</position>
-				<barchart active="true" width="128" height="120" />
+				<position>1164 158 1313 221</position>
+				<barchart active="true" width="199" height="153" />
 			</node>
 			<textbox>
 				<caption>Sempre in evidenza grazie a DistanceEvaluation</caption>
 				<font color="000000" name="Arial" size="12" />
-				<position>4 263 202 299</position>
+				<position>197 310 395 346</position>
 			</textbox>
 		</genie>
 	</extensions>

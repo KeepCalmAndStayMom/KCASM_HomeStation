@@ -44,7 +44,7 @@ class HospitalConstants {
     final static String FALSE_CONTRACTION = "Braxton_Hicks";
     final static String REAL_MODERATE_CONTRACTION = "Reale_moderata";
     final static String REAL_STRONG_CONTRACTION = "Reale_forte";
-    final static String REAL_MIXED_CONTRACTION = "Reale mista";
+    final static String REAL_MIXED_CONTRACTION = "Reale_mista";
 
     final static String PREGNANCY_WEEK_NODE = "Settimana_gravidanza";
     final static String STARTING_PREGNANCY = "Meno_di_26";

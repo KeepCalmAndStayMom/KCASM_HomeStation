@@ -43,7 +43,7 @@ public class HospitalThread extends Thread {
             //chiedo a Fitbit i dati dell'ultima mezz'ora (qui ci sono liste già pronte per i test ma nell'applicazione reale uso la API di Fitbit)
             ArrayList<SamplingHeartbeat> l = new ArrayList<>();
             Random rand = new Random();
-            int randomTest = rand.nextInt(6) + 1;
+            int randomTest = rand.nextInt(8) + 1;
             switch (randomTest) {
                 case 1:
                     CreateSamplingHeartbeatTestList.createList1(l);
@@ -60,8 +60,14 @@ public class HospitalThread extends Thread {
                 case 5:
                     CreateSamplingHeartbeatTestList.createList5(l);
                     break;
+                case 6:
+                    CreateSamplingHeartbeatTestList.createTestList1(l);
+                    break;
+                case 7:
+                    CreateSamplingHeartbeatTestList.createTestList2(l);
+                    break;
                 default:
-                    CreateSamplingHeartbeatTestList.createRealisticList1(l);
+                    CreateSamplingHeartbeatTestList.createRealisticList(l);
                     break;
             }
             ContractionEvaluation.calculateContraction(l, net, pregnancyStart);
@@ -120,13 +126,13 @@ public class HospitalThread extends Thread {
 
         if (decisionValues[2] >= decisionValues[0] && decisionValues[2] >= decisionValues[1]) {
             System.out.println("Meglio andare");
-            Emailer.sendEmail(HospitalConstants.GO);
+            //Emailer.sendEmail(HospitalConstants.GO);
             //SMSNotificator.sendSMS(HospitalConstants.GO);
             //messaggio su DB
         }
         else if (decisionValues[1] >= decisionValues[0] && decisionValues[1] > decisionValues[2]) {
             System.out.println("Meglio prepararsi");
-            Emailer.sendEmail(HospitalConstants.PREPARE);
+            //Emailer.sendEmail(HospitalConstants.PREPARE);
             //SMSNotificator.sendSMS(HospitalConstants.PREPARE);
             //messaggio su DB
         }

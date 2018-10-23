@@ -8,7 +8,7 @@ class CreateSamplingHeartbeatTestList {
 
     /*nota 1: "sintomi di contrazione moderata/forte" vuol dire che potrebbe non essere considerata tale a causa di fattori come la settimana di gravidanza o la presenza di task...*/
     /*nota 2: i primi 5 metodi sono stati pensati per valutare le contrazioni senza tenere conto della loro regolarità*/
-    /*nota 3: i metodi successivi al quinto cercano di simulare campionamenti più realistici*/
+    /*nota 3: i metodi successivi al quinto cercano di simulare campionamenti più realistici, tenendo conto della frequenza delle contrazioni*/
 
     static void createList1(ArrayList<SamplingHeartbeat> l) {//tutto sotto la soglia minima
         l.add(new SamplingHeartbeat(85, "12:00:00"));
@@ -226,7 +226,7 @@ class CreateSamplingHeartbeatTestList {
         l.add(new SamplingHeartbeat(110, "18:00:40"));//sintomi di contrazione moderata
     }
 
-    static void createRealisticList1(ArrayList<SamplingHeartbeat> l) {//principalmente sotto la soglia dolore
+    static void createRealisticList(ArrayList<SamplingHeartbeat> l) {//principalmente sotto la soglia dolore
         l.add(new SamplingHeartbeat(80, "17:45:00"));
         l.add(new SamplingHeartbeat(84, "17:45:12"));
         l.add(new SamplingHeartbeat(82, "17:45:18"));
@@ -362,5 +362,58 @@ class CreateSamplingHeartbeatTestList {
         l.add(new SamplingHeartbeat(98, "18:14:41"));
         l.add(new SamplingHeartbeat(92, "18:14:53"));
         l.add(new SamplingHeartbeat(87, "18:15:00"));//no contrazione
+    }
+
+    static void createTestList1(ArrayList<SamplingHeartbeat> l) {//stesso numero di contrazioni forti e moderate
+        l.add(new SamplingHeartbeat(100, "20:00:00"));
+        l.add(new SamplingHeartbeat(102, "20:00:30"));
+        l.add(new SamplingHeartbeat(96, "20:01:00"));
+        l.add(new SamplingHeartbeat(100, "20:01:30"));//no contrazione
+
+        l.add(new SamplingHeartbeat(150, "20:02:00"));
+        l.add(new SamplingHeartbeat(160, "20:02:10"));
+        l.add(new SamplingHeartbeat(150, "20:02:25"));//sintomi di contrazione forte
+
+        l.add(new SamplingHeartbeat(100, "20:03:00"));
+        l.add(new SamplingHeartbeat(101, "20:03:30"));
+        l.add(new SamplingHeartbeat(101, "20:04:00"));
+        l.add(new SamplingHeartbeat(90, "20:04:30"));//no contrazione
+
+        l.add(new SamplingHeartbeat(180, "20:05:10"));
+        l.add(new SamplingHeartbeat(175, "20:05:15"));
+        l.add(new SamplingHeartbeat(170, "20:05:30"));//sintomi di contrazione forte
+
+        l.add(new SamplingHeartbeat(140, "20:08:00"));
+        l.add(new SamplingHeartbeat(135, "20:08:45"));
+        l.add(new SamplingHeartbeat(140, "20:09:00"));//sintomi di contrazione moderata, fuori dalla fascia di ginnastica
+
+        l.add(new SamplingHeartbeat(131, "20:12:00"));
+        l.add(new SamplingHeartbeat(140, "20:12:30"));
+        l.add(new SamplingHeartbeat(138, "20:12:55"));//sintomi di contrazione moderata, fuori dalla fascia di ginnastica
+
+        l.add(new SamplingHeartbeat(100, "20:13:00"));
+        l.add(new SamplingHeartbeat(101, "20:13:30"));
+        l.add(new SamplingHeartbeat(101, "20:14:00"));
+        l.add(new SamplingHeartbeat(90, "20:14:30"));//no contrazione
+
+        l.add(new SamplingHeartbeat(137, "20:21:05"));
+        l.add(new SamplingHeartbeat(141, "20:21:40"));
+        l.add(new SamplingHeartbeat(140, "20:21:59"));//sintomi di contrazione moderata, fuori dalla fascia di ginnastica
+
+        l.add(new SamplingHeartbeat(180, "20:25:10"));
+        l.add(new SamplingHeartbeat(175, "20:25:15"));
+        l.add(new SamplingHeartbeat(170, "20:25:30"));//sintomi di contrazione forte
+    }
+
+    static void createTestList2(ArrayList<SamplingHeartbeat> l) {//nessun campionamento
+        l.add(new SamplingHeartbeat(null, "10:35:10"));
+        l.add(new SamplingHeartbeat(null, "10:35:15"));
+        l.add(new SamplingHeartbeat(null, "10:35:30"));
+        l.add(new SamplingHeartbeat(null, "10:45:10"));
+        l.add(new SamplingHeartbeat(null, "10:45:15"));
+        l.add(new SamplingHeartbeat(null, "10:45:30"));
+        l.add(new SamplingHeartbeat(null, "10:55:00"));
+        l.add(new SamplingHeartbeat(null, "10:55:02"));
+        l.add(new SamplingHeartbeat(null, "10:55:05"));
     }
 }
