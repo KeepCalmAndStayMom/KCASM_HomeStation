@@ -20,10 +20,12 @@ class ContractionEvaluation {
     private static int gravidanza3 = 34; //tra 32 e 38
     private static int gravidanza4 = 40; //più di 38
     */
+
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static int nNoContr = 0, nFalseContr = 0, nModerateContr = 0, nStrongContr = 0;
     private static ArrayList<SamplingHeartbeat> previousList = null;
     private static int previousDuration = 0, previousMean = 0;
+    private static String previousType;
     
     static void calculateContraction(ArrayList<SamplingHeartbeat> l, Network net, LocalDate startPregnancy) {
         resetCountersAndPrevious();
@@ -72,6 +74,7 @@ class ContractionEvaluation {
         previousDuration = 0;
         previousMean = 0;
         previousList = null;
+        previousType = null;
     }
 
     private static ArrayList<ArrayList<SamplingHeartbeat>> samplingScan(ArrayList<SamplingHeartbeat> l) {
@@ -131,6 +134,7 @@ class ContractionEvaluation {
                         else {
                             if (pregnancyWeek >= HospitalConstants.ADVANCED_PREGNANCY && previousDuration >= HospitalConstants.MINIMUM_DURATION_MODERATE && previousDuration <= HospitalConstants.MAXIMUM_DURATION_MODERATE) {
                                 previousList = lc;
+                                previousType = "moderate";
                                 nModerateContr++;
                             }
                             else
@@ -141,10 +145,12 @@ class ContractionEvaluation {
                         if (pregnancyWeek >= HospitalConstants.ADVANCED_PREGNANCY) {
                             if (previousDuration >= HospitalConstants.MINIMUM_DURATION_MODERATE && previousDuration <= HospitalConstants.MAXIMUM_DURATION_MODERATE && previousMean <= HospitalConstants.PAIN_THRESHOLD && pregnancyWeek < HospitalConstants.ALMOST_BIRTH) {
                                 previousList = lc;
+                                previousType = "moderate";
                                 nModerateContr++;
                             }
                             else if (previousDuration >= HospitalConstants.MINIMUM_DURATION_STRONG && previousDuration <= HospitalConstants.MAXIMUM_DURATION_STRONG && previousMean > HospitalConstants.PAIN_THRESHOLD || pregnancyWeek >= HospitalConstants.ALMOST_BIRTH) {
                                 previousList = lc;
+                                previousType = "strong";
                                 nStrongContr++;
                             }
                             else
@@ -207,23 +213,27 @@ class ContractionEvaluation {
         }
     }
 
-    private static void compareWithPreviousContraction(int minDuration, int maxDuration, int minFrequency, int maxFrequency, int currentDuration, int currentMean, ArrayList<SamplingHeartbeat> currentList, String type) {
+    private static void compareWithPreviousContraction(int minDuration, int maxDuration, int minFrequency, int maxFrequency, int currentDuration, int currentMean, ArrayList<SamplingHeartbeat> currentList, String currentType) {
         int frequency = (int) ChronoUnit.MINUTES.between(LocalTime.parse(previousList.get(0).time, formatter), LocalTime.parse(currentList.get(0).time, formatter));
 
-        if (previousDuration >= minDuration && previousDuration <= maxDuration && frequency >= minFrequency && frequency <= maxFrequency) {
-            switch (type) {
-                case "strong":
-                    if (!(previousMean > HospitalConstants.PAIN_THRESHOLD))
-                        nFalseContr++;
-                    break;
-                case "moderate":
-                    if (!(previousMean <= HospitalConstants.PAIN_THRESHOLD))
-                        nFalseContr++;
-                    break;
+        if (previousType.equalsIgnoreCase(currentType)) {
+            if (previousDuration >= minDuration && previousDuration <= maxDuration && frequency >= minFrequency && frequency <= maxFrequency) {
+                switch (currentType) {
+                    case "strong":
+                        if (!(previousMean > HospitalConstants.PAIN_THRESHOLD))
+                            nFalseContr++;
+                        break;
+                    case "moderate":
+                        if (!(previousMean <= HospitalConstants.PAIN_THRESHOLD))
+                            nFalseContr++;
+                        break;
+                }
             }
+            else
+                nFalseContr++;
         }
-        else
-            nFalseContr++;
+        else //evita il continuo riassegnamento dello stesso valore
+            previousType = currentType;
 
         previousDuration = currentDuration;
         previousMean = currentMean;
