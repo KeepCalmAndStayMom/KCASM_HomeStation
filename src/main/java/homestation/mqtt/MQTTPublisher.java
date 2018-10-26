@@ -17,7 +17,7 @@ public class MQTTPublisher {
     private ZWaySensor zway;
     private FitbitObject fitbit;
 
-    private MqttClient client;
+    private static MqttClient client;
 
     public MQTTPublisher(HueObject hue, ZWaySensor zway, FitbitObject fitbit) {
         this.hue = hue;
@@ -28,7 +28,6 @@ public class MQTTPublisher {
 
         try {
             client = new MqttClient(HomestationSettings.BROKER_URL, clientId);
-
         } catch (MqttException e) {
             e.printStackTrace();
         }
@@ -41,7 +40,6 @@ public class MQTTPublisher {
             options.setWill(client.getTopic("homestation/LWT"), "Il Publisher si è disconnesso".getBytes(), 0, false);
             client.connect(options);
 
-            publishHue();
             publishZWaySensor();
             publishFitbit();
 
@@ -50,11 +48,14 @@ public class MQTTPublisher {
         }
     }
 
-    private void publishHue() {
+    public static void publishHue(String message) {
         MqttTopic hueTopic = client.getTopic(TOPIC_HUE);
-        HueThread tHue = new HueThread(hueTopic, hue);
 
-        tHue.start();
+        try {
+            hueTopic.publish(new MqttMessage(message.getBytes()));
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
     }
 
     private void publishZWaySensor() {

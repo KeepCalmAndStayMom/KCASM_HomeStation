@@ -1,6 +1,8 @@
 package homestation.hue;
 
 import com.google.gson.Gson;
+import homestation.mqtt.MQTTPublisher;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,8 +13,6 @@ public class HueObject {
     private final String CLOSED_BRACE = "}";
     private final String COMMA = ", ";
     private ArrayList<Hue> hues = new ArrayList<>();
-    private int countCromoSoft = 0;
-    private int countCromoHard = 0;
 
     public HueObject() {
         for (String s : UtilityMethodsHue.getAllLights().keySet()) {
@@ -26,15 +26,6 @@ public class HueObject {
             HueToObject(h.getId());
     }
 
-    public synchronized String toJson() {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append("{\"cromoSoft\": ").append(countCromoSoft).append(",");
-        builder.append("\"cromoHard\": ").append(countCromoHard).append("}");
-
-        return builder.toString();
-    }
-
     public synchronized void switchOnHues() {
         setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("ON") + CLOSED_BRACE);
     }
@@ -44,7 +35,7 @@ public class HueObject {
     }
 
     public synchronized void chromotherapySoft() {
-        countCromoSoft++;
+        MQTTPublisher.publishHue("{\"cromoterapia\": \"soft\"}");
 
         setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("ON") + COMMA + SettingsHue.SETTINGS.get("BLUE") + COMMA + SettingsHue.SETTINGS.get("MAX_BRI") + COMMA + SettingsHue.SETTINGS.get("MAX_SAT") + CLOSED_BRACE);
         sleep(5000);
@@ -65,7 +56,7 @@ public class HueObject {
     }
 
     public synchronized void chromotherapyHard() {
-        countCromoHard++;
+        MQTTPublisher.publishHue("{\"cromoterapia\": \"hard\"}");
 
         setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("ON") + COMMA + SettingsHue.SETTINGS.get("BLUE") + COMMA + SettingsHue.SETTINGS.get("MAX_BRI") + COMMA + SettingsHue.SETTINGS.get("MAX_SAT") + CLOSED_BRACE);
         sleep(5000);
@@ -86,11 +77,6 @@ public class HueObject {
         sleep(5000);
 
         setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("DEFAULT_COLOR") + COMMA + SettingsHue.SETTINGS.get("NONE_EFFECT") + CLOSED_BRACE);
-    }
-
-    public synchronized void resetCountCromo() {
-        countCromoSoft = 0;
-        countCromoHard = 0;
     }
 
     private void setAllHues(String json) {
