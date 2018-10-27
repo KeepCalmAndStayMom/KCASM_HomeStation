@@ -74,7 +74,7 @@ public class HospitalThread extends Thread {
                     CreateSamplingHeartbeatTestList.createRealisticList(l);
                     break;
             }
-            ContractionEvaluation.calculateContraction(l, net, pregnancyStart);
+            ContractionEvaluation.calculateContraction(l, net, pregnancyStart, new SkipScanStrategy(), new AllFactorsCounterEvaluationStrategy());
 
             //calcolo la EU di andare e non andare in ospedale, se è meglio andare o prepararsi viene mandata una notifica
             net.updateBeliefs();

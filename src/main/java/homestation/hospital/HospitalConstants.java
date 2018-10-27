@@ -2,7 +2,11 @@ package homestation.hospital;
 
 import homestation.HomestationSettings;
 
+import java.time.format.DateTimeFormatter;
+
 class HospitalConstants {
+
+    static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     final static int MINIMUM_THRESHOLD = 105;//heartbeats
     final static int FITNESS_THRESHOLD = 130;//heartbeats
