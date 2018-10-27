@@ -47,6 +47,10 @@ public class HomestationSettings {
     public static String HOME_ADDRESS;
     public static String HOSPITAL_ADDRESS;
 
+    public static boolean EMAIL_NOTIFICATION;
+    public static boolean SMS_NOTIFICATION;
+    public static boolean DB_MESSAGE_NOTIFICATION;
+
     static void createSettings() {
         Map settings = new Gson().fromJson(jsonFromFile("src/main/resources/settings.json"), Map.class);
 
@@ -75,6 +79,9 @@ public class HomestationSettings {
         PHONE_NUMBER_USER = String.valueOf(settings.get("PHONE_NUMBER_USER"));
         HOME_ADDRESS = String.valueOf(settings.get("HOME_ADDRESS"));
         HOSPITAL_ADDRESS = String.valueOf(settings.get("HOSPITAL_ADDRESS"));
+        EMAIL_NOTIFICATION = (boolean) settings.get("EMAIL_NOTIFICATION");
+        SMS_NOTIFICATION = (boolean) settings.get("SMS_NOTIFICATION");
+        DB_MESSAGE_NOTIFICATION = (boolean) settings.get("MESSAGE_NOTIFICATION");
     }
 
     private static String jsonFromFile(String filePath) {

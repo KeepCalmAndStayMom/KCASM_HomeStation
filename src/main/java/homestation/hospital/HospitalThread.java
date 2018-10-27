@@ -11,6 +11,10 @@ public class HospitalThread extends Thread {
 
     private LocalDate pregnancyStart = HomestationSettings.PREGNANCY_START_DATE;
 
+    private boolean emailNotification = HomestationSettings.EMAIL_NOTIFICATION;
+    private boolean SMSNotification = HomestationSettings.SMS_NOTIFICATION;
+    private boolean DBMessage = HomestationSettings.DB_MESSAGE_NOTIFICATION;
+
     @Override
     public void run() {
         System.setProperty("jsmile.native.library", "C:/Users/Paolo/IdeaProjects/KCASM_HomeStation/lib/jsmile.dll");
@@ -126,17 +130,34 @@ public class HospitalThread extends Thread {
 
         if (decisionValues[2] >= decisionValues[0] && decisionValues[2] >= decisionValues[1]) {
             System.out.println("Meglio andare");
-            //Emailer.sendEmail(HospitalConstants.GO);
-            //SMSNotificator.sendSMS(HospitalConstants.GO);
-            //messaggio su DB
+            //sendMessage(HospitalConstants.GO);
         }
         else if (decisionValues[1] >= decisionValues[0] && decisionValues[1] > decisionValues[2]) {
             System.out.println("Meglio prepararsi");
-            //Emailer.sendEmail(HospitalConstants.PREPARE);
-            //SMSNotificator.sendSMS(HospitalConstants.PREPARE);
-            //messaggio su DB
+            //sendMessage(HospitalConstants.PREPARE);
         }
         else
             System.out.println("Meglio stare a casa");
+    }
+
+    private void sendMessage(String message) {
+        try {
+            //GET del tipo di notifiche che la paziente vuole ricevere e settaggio appropriato dei tre campi boolean
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (emailNotification)
+            Emailer.sendEmail(message);
+
+        if (SMSNotification)
+            SMSNotificator.sendSMS(message);
+
+        if (DBMessage)
+            sendDBMessage(message);
+    }
+
+    private void sendDBMessage(String m) {
+        //POST del messaggio su database
     }
 }
