@@ -13,7 +13,6 @@ public class HospitalThread extends Thread {
 
     private boolean emailNotification = HomestationSettings.EMAIL_NOTIFICATION;
     private boolean SMSNotification = HomestationSettings.SMS_NOTIFICATION;
-    private boolean DBMessage = HomestationSettings.DB_MESSAGE_NOTIFICATION;
 
     @Override
     public void run() {
@@ -42,6 +41,9 @@ public class HospitalThread extends Thread {
 
         //calcolo la distanza: uso la API di geocoding per ottenere le coordinate, poi uso la API di routing passando le coordinate per ottenere la distanza
         DistanceEvaluation.calculateDistance(net);
+
+        SamplingListScanStrategy scanStrategy = new SkipScanStrategy();
+        SamplingListEvaluationStrategy evaluationStrategy = new AllFactorsCounterEvaluationStrategy();
 
         while (true) {
             //chiedo a Fitbit i dati dell'ultima mezz'ora (qui ci sono liste già pronte per i test ma nell'applicazione reale uso la API di Fitbit)
@@ -74,7 +76,7 @@ public class HospitalThread extends Thread {
                     CreateSamplingHeartbeatTestList.createRealisticList(l);
                     break;
             }
-            ContractionEvaluation.calculateContraction(l, net, pregnancyStart, new SkipScanStrategy(), new AllFactorsCounterEvaluationStrategy());
+            ContractionEvaluation.calculateContraction(l, net, pregnancyStart, scanStrategy, evaluationStrategy);
 
             //calcolo la EU di andare e non andare in ospedale, se è meglio andare o prepararsi viene mandata una notifica
             net.updateBeliefs();
@@ -142,7 +144,7 @@ public class HospitalThread extends Thread {
 
     private void sendMessage(String message) {
         try {
-            //GET del tipo di notifiche che la paziente vuole ricevere e settaggio appropriato dei tre campi boolean
+            //GET del tipo di notifiche che la paziente vuole ricevere e settaggio appropriato dei campi boolean
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -150,11 +152,10 @@ public class HospitalThread extends Thread {
         if (emailNotification)
             Emailer.sendEmail(message);
 
-        if (SMSNotification)
-            SMSNotificator.sendSMS(message);
+        /*if (SMSNotification)
+            SMSNotificator.sendSMS(message);*/
 
-        if (DBMessage)
-            sendDBMessage(message);
+        sendDBMessage(message);
     }
 
     private void sendDBMessage(String m) {

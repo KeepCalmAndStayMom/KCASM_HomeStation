@@ -29,15 +29,8 @@ class ContractionEvaluation {
         }
 
         pregnancyTimeEvaluation(net, pregnancyWeek);
-
-        if (l == null || l.size() == 0) {
-            net.setEvidence(HospitalConstants.CONTRACTION_NODE, HospitalConstants.NO_FITBIT);
-            return;
-        }
-
-        ArrayList<ArrayList<SamplingHeartbeat>> evaluationList = scanStrategy.createEvaluationList(l);
         
-        net.setEvidence(HospitalConstants.CONTRACTION_NODE, evaluationStrategy.contractionTypeEvaluation(evaluationList, pregnancyWeek));
+        net.setEvidence(HospitalConstants.CONTRACTION_NODE, evaluationStrategy.contractionTypeEvaluation(scanStrategy.createEvaluationList(l), pregnancyWeek));
     }
 
     private static void pregnancyTimeEvaluation(Network net, int pregnancyWeek) {

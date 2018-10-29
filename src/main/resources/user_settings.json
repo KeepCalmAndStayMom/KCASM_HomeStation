@@ -5,6 +5,5 @@
   "HOME_ADDRESS": "Via-Mora-e-Gibin-28021-Borgomanero",
   "HOSPITAL_ADDRESS": "Viale-Maddalena-Zoppis-28021-Borgomanero",
   "EMAIL_NOTIFICATION": true,
-  "SMS_NOTIFICATION": true,
-  "MESSAGE_NOTIFICATION": true
+  "SMS_NOTIFICATION": true
 }

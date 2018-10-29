@@ -22,6 +22,8 @@ public class AllFactorsCounterEvaluationStrategy implements SamplingListEvaluati
 
         boolean taskPresence = checkActivitiesInTheDay();
 
+        resetCountersAndPrevious();
+
         System.out.println(evaluationList);
         System.out.println(pregnancyWeek + " settimane, presenza task: " + taskPresence);
 
@@ -118,7 +120,19 @@ public class AllFactorsCounterEvaluationStrategy implements SamplingListEvaluati
         return checkCounter();
     }
 
-    private static boolean checkActivitiesInTheDay() {
+    private void resetCountersAndPrevious() {
+        nNoContr = 0;
+        nFalseContr = 0;
+        nModerateContr = 0;
+        nStrongContr = 0;
+
+        previousList = null;
+        previousDuration = 0;
+        previousMean = 0;
+        previousType = "";
+    }
+
+    private boolean checkActivitiesInTheDay() {
         try {
             URL url = new URL(HospitalConstants.ACTIVITIES_URL + LocalDate.now());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
