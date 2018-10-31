@@ -3,7 +3,7 @@ package homestation;
 import homestation.dialogflow.DialogflowWebhookThread;
 import homestation.fitbit.FitbitObject;
 import homestation.fitbit.UtilityMethodsFitbit;
-import homestation.hospital.HospitalThread;
+import homestation.hospital.*;
 import homestation.hue.HueObject;
 import homestation.mqtt.MQTTPublisher;
 import homestation.zway.ZWaySensor;
@@ -14,7 +14,6 @@ import java.util.Calendar;
 public class MainHomestation {
 
     public static void main(String[] args) {
-
         HomestationSettings.createSettings();
 
         /*LocalDate localDate = LocalDate.now();
@@ -35,7 +34,7 @@ public class MainHomestation {
         ControllerThread controller = new ControllerThread(obj, zway, fitbit);
         controller.start();*/
 
-        HospitalThread hospital = new HospitalThread();
+        HospitalThread hospital = new HospitalThread(new SkipScanStrategy(), new AllFactorsCounterEvaluationStrategy());
         hospital.start();
     }
 }

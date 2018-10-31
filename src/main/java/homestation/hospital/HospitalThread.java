@@ -14,6 +14,19 @@ public class HospitalThread extends Thread {
     private boolean emailNotification = HomestationSettings.EMAIL_NOTIFICATION;
     private boolean SMSNotification = HomestationSettings.SMS_NOTIFICATION;
 
+    private SamplingListScanStrategy scanStrategy;
+    private SamplingListEvaluationStrategy evaluationStrategy;
+
+    public HospitalThread(SamplingListScanStrategy scanStrategy, SamplingListEvaluationStrategy evaluationStrategy) {
+        this.scanStrategy = scanStrategy;
+        this.evaluationStrategy = evaluationStrategy;
+    }
+
+    public void setStrategies(SamplingListScanStrategy scanStrategy, SamplingListEvaluationStrategy evaluationStrategy) {
+        this.scanStrategy = scanStrategy;
+        this.evaluationStrategy = evaluationStrategy;
+    }
+
     @Override
     public void run() {
         System.setProperty("jsmile.native.library", "C:/Users/Paolo/IdeaProjects/KCASM_HomeStation/lib/jsmile.dll");
@@ -41,9 +54,6 @@ public class HospitalThread extends Thread {
 
         //calcolo la distanza: uso la API di geocoding per ottenere le coordinate, poi uso la API di routing passando le coordinate per ottenere la distanza
         DistanceEvaluation.calculateDistance(net);
-
-        SamplingListScanStrategy scanStrategy = new SkipScanStrategy();
-        SamplingListEvaluationStrategy evaluationStrategy = new AllFactorsCounterEvaluationStrategy();
 
         while (true) {
             //chiedo a Fitbit i dati dell'ultima mezz'ora (qui ci sono liste già pronte per i test ma nell'applicazione reale uso la API di Fitbit)
