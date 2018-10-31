@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.Calendar;
 
 public class MainHomestation {
-
     public static void main(String[] args) {
         HomestationSettings.createSettings();
 

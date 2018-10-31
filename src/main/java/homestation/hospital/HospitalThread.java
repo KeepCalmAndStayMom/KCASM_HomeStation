@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class HospitalThread extends Thread {
-
     private LocalDate pregnancyStart = HomestationSettings.PREGNANCY_START_DATE;
 
     private boolean emailNotification = HomestationSettings.EMAIL_NOTIFICATION;
@@ -18,11 +17,6 @@ public class HospitalThread extends Thread {
     private SamplingListEvaluationStrategy evaluationStrategy;
 
     public HospitalThread(SamplingListScanStrategy scanStrategy, SamplingListEvaluationStrategy evaluationStrategy) {
-        this.scanStrategy = scanStrategy;
-        this.evaluationStrategy = evaluationStrategy;
-    }
-
-    public void setStrategies(SamplingListScanStrategy scanStrategy, SamplingListEvaluationStrategy evaluationStrategy) {
         this.scanStrategy = scanStrategy;
         this.evaluationStrategy = evaluationStrategy;
     }

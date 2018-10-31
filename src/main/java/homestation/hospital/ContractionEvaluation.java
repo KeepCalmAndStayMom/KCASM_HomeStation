@@ -13,7 +13,6 @@ class ContractionEvaluation {
     private static int gravidanza3 = 34; //tra 32 e 38
     private static int gravidanza4 = 40; //più di 38
     */
-    
     static void calculateContraction(ArrayList<SamplingHeartbeat> l, Network net, LocalDate startPregnancy, SamplingListScanStrategy scanStrategy, SamplingListEvaluationStrategy evaluationStrategy) {
         int pregnancyWeek = (int) ChronoUnit.WEEKS.between(startPregnancy, LocalDate.now());
 
