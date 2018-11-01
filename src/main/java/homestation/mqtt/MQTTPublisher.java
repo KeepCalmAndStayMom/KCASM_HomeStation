@@ -13,14 +13,12 @@ public class MQTTPublisher {
     private static final String TOPIC_ZWAY = "homestation/" + HomestationSettings.HOMESTATION_ID + "/zway";
     private static final String TOPIC_FITBIT = "homestation/" + HomestationSettings.HOMESTATION_ID + "/fitbit";
 
-    private HueObject hue;
     private ZWaySensor zway;
     private FitbitObject fitbit;
 
     private static MqttClient client;
 
-    public MQTTPublisher(HueObject hue, ZWaySensor zway, FitbitObject fitbit) {
-        this.hue = hue;
+    public MQTTPublisher(ZWaySensor zway, FitbitObject fitbit) {
         this.zway = zway;
         this.fitbit = fitbit;
 

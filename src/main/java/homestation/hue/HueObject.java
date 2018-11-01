@@ -2,7 +2,6 @@ package homestation.hue;
 
 import com.google.gson.Gson;
 import homestation.mqtt.MQTTPublisher;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

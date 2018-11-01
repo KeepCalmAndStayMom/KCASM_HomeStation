@@ -40,7 +40,7 @@ class FitbitFactory {
             LocalTime t2 = LocalTime.parse(timeEnd);
             t2.minusMinutes(3);
 
-            url = new FitbitUrl(HomestationSettings.FITBIT_URL + "activities/heart/date/" + data + "/1d/time/" + t1.toString() + "/" + t2.toString() + ".json");
+            url = new FitbitUrl(HomestationSettings.FITBIT_URL + "activities/heart/date/" + data + "/1d/1sec/time/" + t1.toString() + "/" + t2.toString() + ".json");
         }
         setRequest(requestFactory);
         Fitbit f = new HeartRate();

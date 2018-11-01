@@ -17,7 +17,7 @@ import homestation.zway.ZWaySensor;
 
 import static spark.Spark.*;
 
-public class DialogflowWebhookThread extends Thread{
+public class DialogflowWebhookThread extends Thread {
 
     private static HueObject obj;
     private static ZWaySensor zway;
@@ -160,9 +160,8 @@ public class DialogflowWebhookThread extends Thread{
 
                 f = UtilityMethodsFitbit.getFitbit(TypeDataFitBit.HEARTRATE, HomestationSettings.DTF.format(localDate), HomestationSettings.SDF.format(cal2.getTime()), HomestationSettings.SDF.format(cal.getTime()));
 
-                if (f != null && f.getAvgHeartbeats() != null) {
+                if (f != null && f.getAvgHeartbeats() != null)
                     text = "Il tuo battito cardiaco è di " + f.getAvgHeartbeats() + " al minuto!";
-                }
                 else
                     text = "Non riesco a recuperare il tuo battito cardiaco... probabilmente non stai indossando il Fitbit!";
             }
