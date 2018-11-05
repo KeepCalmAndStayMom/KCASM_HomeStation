@@ -60,8 +60,12 @@ class HospitalConstants {
     final static String MEDIUM_DISTANCE = "Tra_3_e_10_kilometri";
     final static String LONG_DISTANCE = "Oltre_10_kilometri";
 
-    //Activities API URL
-    final static String ACTIVITIES_URL = "http://localhost:4567/api/activities/" + HomestationSettings.HOMESTATION_ID + "/";
+    //API URLs
+    final private static String BASE_URL = "http://localhost:4567/api/v2/";
+    final static String MESSAGE_URL = BASE_URL + "medics/0/messages";
+    final static String PATIENT_URL = BASE_URL + "patients/" + HomestationSettings.HOMESTATION_ID;
+    final static String ACTIVITIES_URL = PATIENT_URL + "/tasks/activities?executed=0&date=";
+    final static String LOGIN_URL = PATIENT_URL + "/login_data";
 
     //URLs for graphhopper APIs
     final private static String GRAPHHOPPER_API_KEY = "bf9cc82a-9a44-47a0-91c1-f5172afbf136";
@@ -73,7 +77,7 @@ class HospitalConstants {
 
     //notification messages
     final private static String END_MESSAGE = "\n\nNon rispondere a questo messaggio di sistema.\n\n";
-    final static String GO = "Il parto è imminente! Vai in ospedale!" + END_MESSAGE;
-    final static String PREPARE = "È conveniente iniziare a preparare le valigie, il parto è probabile!" + END_MESSAGE;
+    final static String GO = "Il parto e' imminente! Vai in ospedale!" + END_MESSAGE;
+    final static String PREPARE = "E' conveniente iniziare a preparare le valigie, il parto e' probabile!" + END_MESSAGE;
     final static String SUBJECT = "Notifica parto";
 }

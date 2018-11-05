@@ -2,7 +2,6 @@ package homestation.hospital;
 
 import com.google.gson.Gson;
 import homestation.HomestationSettings;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,13 +13,12 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 class Emailer {
-
     private static String mailTo = HomestationSettings.EMAIL_USER;
 
     static void sendEmail(String content) {
         try {
             StringBuilder result = new StringBuilder();
-            URL url = new URL("http://localhost:4567/api/login?name=Paola_T&password=tullioh");//da modificare quando ci sarà il nuovo DB con le nuove API
+            URL url = new URL(HospitalConstants.LOGIN_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 

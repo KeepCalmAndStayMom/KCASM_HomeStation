@@ -1,14 +1,27 @@
 package homestation.hospital;
 
+import com.google.gson.Gson;
 import homestation.HomestationSettings;
 import homestation.fitbit.SamplingHeartbeat;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import smile.Network;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class HospitalThread extends Thread {
     private LocalDate pregnancyStart = HomestationSettings.PREGNANCY_START_DATE;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private boolean emailNotification = HomestationSettings.EMAIL_NOTIFICATION;
     private boolean SMSNotification = HomestationSettings.SMS_NOTIFICATION;
@@ -148,8 +161,22 @@ public class HospitalThread extends Thread {
 
     private void sendMessage(String message) {
         try {
-            //GET del tipo di notifiche che la paziente vuole ricevere e settaggio appropriato dei campi boolean
-        } catch (Exception e) {
+            StringBuilder result = new StringBuilder();
+            URL url = new URL(HospitalConstants.LOGIN_URL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line;
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+            }
+            rd.close();
+
+            HashMap<String, Boolean> map = new Gson().fromJson(result.toString(), HashMap.class);
+            emailNotification =  map.get("email_notify");
+            SMSNotification = map.get("sms_notify");
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -162,7 +189,24 @@ public class HospitalThread extends Thread {
         sendDBMessage(message);
     }
 
-    private void sendDBMessage(String m) {
-        //POST del messaggio su database
+    private void sendDBMessage(String message) {
+        try {
+            CloseableHttpClient client = HttpClientBuilder.create().build();
+            HttpPost post = new HttpPost(HospitalConstants.MESSAGE_URL);
+
+            String json = "{\"patient_id\": " + HomestationSettings.HOMESTATION_ID + ", \"timedate\": \"" + formatter.format(LocalDateTime.now()) + "\", \"subject\": \"" + HospitalConstants.SUBJECT + "\", \"message\": \"" + message + "\"}";
+
+            StringEntity jsonMessage = new StringEntity(json);
+            post.setEntity(jsonMessage);
+            post.setHeader("Content-type", "application/json");
+            CloseableHttpResponse response = client.execute(post);
+            response.close();
+            client.close();
+
+            System.out.println("Messaggio su DB inviato correttamente");
+        } catch(IOException e) {
+            e.printStackTrace();
+            System.out.println("Errore nell'invio del messaggio su DB");
+        }
     }
 }

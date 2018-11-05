@@ -17,7 +17,6 @@ import java.net.URL;
 import java.util.HashMap;
 
 class SMSNotificator {
-
     private static AuthMethod auth = new TokenAuthMethod(HomestationSettings.NEXMO_API_KEY, HomestationSettings.NEXMO_API_SECRET);
     private static NexmoClient client = new NexmoClient(auth);
     private static String userPhone = HomestationSettings.PHONE_NUMBER_USER;
@@ -25,7 +24,7 @@ class SMSNotificator {
     static void sendSMS(String text) {
         try {
             StringBuilder result = new StringBuilder();
-            URL url = new URL("http://localhost:4567/api/users/" + HomestationSettings.HOMESTATION_ID);//da modificare quando ci sarà il nuovo DB con le nuove API
+            URL url = new URL(HospitalConstants.PATIENT_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
@@ -37,7 +36,7 @@ class SMSNotificator {
             rd.close();
 
             HashMap<String, Object> map = new Gson().fromJson(result.toString(), HashMap.class);
-            userPhone = (String) map.get("phone_number");
+            userPhone = (String) map.get("phone");
         } catch (IOException e){
             e.printStackTrace();
             System.out.println("Errore nel recupero del numero di telefono");
