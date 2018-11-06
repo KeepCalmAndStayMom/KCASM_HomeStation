@@ -11,6 +11,7 @@ import java.util.Calendar;
 public class FitbitThread extends Thread {
     private MqttTopic topic;
     private FitbitObject fitbit;
+    private int i = 0;
 
     FitbitThread(MqttTopic topic, FitbitObject fitbit) {
         this.topic = topic;
@@ -20,21 +21,24 @@ public class FitbitThread extends Thread {
     @Override
     public void run() {
         while (true) {
+            i++;
 
-            LocalDate localDate = LocalDate.now();
             Calendar cal = Calendar.getInstance();
-            Calendar cal2 = Calendar.getInstance();
-            cal2.add(Calendar.MINUTE, -1);
+            cal.add(Calendar.MINUTE, -1);
 
-            fitbit.updateFitbit(HomestationSettings.DTF.format(localDate), HomestationSettings.SDF.format(cal2.getTime()), HomestationSettings.SDF.format(cal.getTime()));
+            fitbit.updateFitbit(HomestationSettings.DTF.format(LocalDate.now()), HomestationSettings.SDF.format(cal.getTime()), HomestationSettings.SDF.format(Calendar.getInstance().getTime()));
 
-            try {
-                topic.publish(new MqttMessage(fitbit.toJson().getBytes()));
-            } catch (MqttException e) {
-                e.printStackTrace();
+            if (i == 15) {
+                try {
+                    topic.publish(new MqttMessage(fitbit.toJson().getBytes()));
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("Published message on topic '" + topic.getName() + "': " + fitbit);
+
+                i = 0;
             }
-
-            System.out.println("Published message on topic '" + topic.getName() + "': " + fitbit);
 
             try {
                 Thread.sleep(60000);

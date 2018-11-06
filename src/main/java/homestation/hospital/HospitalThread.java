@@ -2,12 +2,13 @@ package homestation.hospital;
 
 import com.google.gson.Gson;
 import homestation.HomestationSettings;
-import homestation.fitbit.SamplingHeartbeat;
+import homestation.fitbit.*;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import smile.License;
 import smile.Network;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class HospitalThread extends Thread {
     @Override
     public void run() {
         System.setProperty("jsmile.native.library", "C:/Users/Paolo/IdeaProjects/KCASM_HomeStation/lib/jsmile.dll");
-        new smile.License(
+        new License(
                 "SMILE LICENSE f08b4722 ab3866b5 ead85dce " +
                         "THIS IS AN ACADEMIC LICENSE AND CAN BE USED " +
                         "SOLELY FOR ACADEMIC RESEARCH AND TEACHING, " +
@@ -64,6 +65,12 @@ public class HospitalThread extends Thread {
 
         while (true) {
             //chiedo a Fitbit i dati dell'ultima mezz'ora (qui ci sono liste già pronte per i test ma nell'applicazione reale uso la API di Fitbit)
+
+            /*Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MILLISECOND, HospitalConstants.CONTRACTION_EVALUATION_FREQUENCY);
+            Fitbit heartRate = UtilityMethodsFitbit.getFitbit(TypeDataFitBit.HEARTRATE, HomestationSettings.DTF.format(LocalDate.now()), HomestationSettings.SDF.format(cal.getTime()), HomestationSettings.SDF.format(Calendar.getInstance().getTime()));
+            ArrayList<SamplingHeartbeat> l = ((HeartRate) heartRate).getHeartbeats();*/
+
             ArrayList<SamplingHeartbeat> l = new ArrayList<>();
             Random rand = new Random();
             int randomTest = rand.nextInt(8) + 1;

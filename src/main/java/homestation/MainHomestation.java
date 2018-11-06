@@ -15,14 +15,13 @@ public class MainHomestation {
     public static void main(String[] args) {
         HomestationSettings.createSettings();
 
-        /*LocalDate localDate = LocalDate.now();
+        /*
         Calendar cal = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal2.add(Calendar.MINUTE, -5);
+        cal.add(Calendar.MINUTE, -5);
 
         HueObject obj = new HueObject();
         ZWaySensor zway = new ZWaySensor(HomestationSettings.SENSOR_NODE);
-        FitbitObject fitbit = UtilityMethodsFitbit.getFitbitAll(HomestationSettings.DTF.format(localDate), HomestationSettings.SDF.format(cal2.getTime()), HomestationSettings.SDF.format(cal.getTime()));
+        FitbitObject fitbit = UtilityMethodsFitbit.getFitbitAll(HomestationSettings.DTF.format(LocalDate.now()), HomestationSettings.SDF.format(cal.getTime()), HomestationSettings.SDF.format(Calendar.getInstance().getTime()));
 
         MQTTPublisher publisher = new MQTTPublisher(obj, zway, fitbit);
         publisher.start();

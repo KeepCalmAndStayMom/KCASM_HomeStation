@@ -28,7 +28,7 @@ public class ZWayThread extends Thread {
             System.out.println("Published message on topic '" + topic.getName() + "': " + zway);
 
             try {
-                Thread.sleep(1800000);
+                Thread.sleep(7200000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
