@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 class ContractionEvaluation {
     /*
-    private static int gravidanza1 = 22; //meno di 26
-    private static int gravidanza2 = 28; //tra 26 e 32
-    private static int gravidanza3 = 34; //tra 32 e 38
-    private static int gravidanza4 = 40; //più di 38
+    private static int gravidanza1 = 22; //prima di 26esima
+    private static int gravidanza2 = 28; //tra 26esima e 32esima
+    private static int gravidanza3 = 34; //tra 32esima e 38esima
+    private static int gravidanza4 = 40; //dopo la 38esima
     */
     static void calculateContraction(ArrayList<SamplingHeartbeat> l, Network net, LocalDate startPregnancy, SamplingListScanStrategy scanStrategy, SamplingListEvaluationStrategy evaluationStrategy) {
         int pregnancyWeek = (int) ChronoUnit.WEEKS.between(startPregnancy, LocalDate.now());

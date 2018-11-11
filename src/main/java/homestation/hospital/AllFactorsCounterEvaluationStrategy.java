@@ -20,6 +20,9 @@ public class AllFactorsCounterEvaluationStrategy implements SamplingListEvaluati
         if (evaluationList == null || evaluationList.size() == 0)
             return HospitalConstants.NO_FITBIT;
 
+        if (pregnancyWeek < HospitalConstants.CONTRACTION_BEGINNING_ESTIMATION)
+            return HospitalConstants.NO_CONTRACTION;
+
         boolean taskPresence = checkActivitiesInTheDay();
 
         resetCountersAndPrevious();

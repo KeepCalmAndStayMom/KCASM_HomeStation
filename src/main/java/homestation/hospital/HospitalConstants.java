@@ -15,9 +15,9 @@ class HospitalConstants {
     final static int TOO_FEW_SAMPLINGS = 1;//samplings in a list to evaluate
     final static int CONTRACTION_EVALUATION_FREQUENCY = 5000;//milliseconds
 
-    final static int CONTRACTION_BEGINNING_ESTIMATION = 26;//weeks
-    final static int ADVANCED_PREGNANCY = 32;//weeks
-    final static int ALMOST_BIRTH = 38;//weeks
+    final static int CONTRACTION_BEGINNING_ESTIMATION = 25;//weeks
+    final static int ADVANCED_PREGNANCY = 31;//weeks
+    final static int ALMOST_BIRTH = 37;//weeks
 
     final static int MINIMUM_FREQUENCY_MODERATE = 5;//minutes
     final static int MAXIMUM_FREQUENCY_MODERATE = 10;//minutes
