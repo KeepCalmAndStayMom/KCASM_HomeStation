@@ -23,7 +23,7 @@ public class MainHomestation {
         ZWaySensor zway = new ZWaySensor(HomestationSettings.SENSOR_NODE);
         FitbitObject fitbit = UtilityMethodsFitbit.getFitbitAll(HomestationSettings.DTF.format(LocalDate.now()), HomestationSettings.SDF.format(cal.getTime()), HomestationSettings.SDF.format(Calendar.getInstance().getTime()));
 
-        MQTTPublisher publisher = new MQTTPublisher(obj, zway, fitbit);
+        MQTTPublisher publisher = new MQTTPublisher(zway, fitbit);
         publisher.start();
 
         DialogflowWebhookThread webhook = new DialogflowWebhookThread(obj, zway);

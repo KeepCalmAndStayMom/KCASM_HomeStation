@@ -18,7 +18,6 @@ import homestation.zway.ZWaySensor;
 import static spark.Spark.*;
 
 public class DialogflowWebhookThread extends Thread {
-
     private static HueObject obj;
     private static ZWaySensor zway;
 
@@ -31,7 +30,6 @@ public class DialogflowWebhookThread extends Thread {
 
     @Override
     public void run() {
-
         Gson gson = GsonFactory.getDefaultFactory().getGson();
         port(4568);
         staticFiles.location("/public");
@@ -48,7 +46,6 @@ public class DialogflowWebhookThread extends Thread {
     }
 
     private static void dialogflowWebhook(AIResponse input, Fulfillment output) {
-
         switch (input.getResult().getAction().toLowerCase()) {
             case "cromoterapia":
                 dialogChromo(input);
