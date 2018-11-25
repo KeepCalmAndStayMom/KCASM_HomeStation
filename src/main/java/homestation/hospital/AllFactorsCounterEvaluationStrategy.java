@@ -140,10 +140,15 @@ public class AllFactorsCounterEvaluationStrategy implements SamplingListEvaluati
             URL url = new URL(HospitalConstants.ACTIVITIES_URL + LocalDate.now());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-            return conn.getResponseCode() == 200;
+            if (conn.getResponseCode() == 200) {
+                conn.disconnect();
+                return true;
+            }
+            conn.disconnect();
         } catch (IOException e) {
-            return false;
+            e.printStackTrace();
         }
+        return false;
     }
 
     private void compareWithPreviousContraction(int minDuration, int maxDuration, int minFrequency, int maxFrequency, int currentDuration, int currentMean, ArrayList<SamplingHeartbeat> currentList, String currentType) {
