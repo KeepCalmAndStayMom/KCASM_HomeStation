@@ -144,7 +144,6 @@ public class AllFactorsCounterEvaluationStrategy implements SamplingListEvaluati
                 conn.disconnect();
                 return true;
             }
-            conn.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
         }
