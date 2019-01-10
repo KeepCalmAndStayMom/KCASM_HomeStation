@@ -36,10 +36,17 @@ public class HeartRate extends Fitbit {
     public synchronized Integer getAvgHeartbeats() {
         if (heartbeats.isEmpty())
             return null;
-        int avg = 0;
+        int avg = 0, dim = 0;
         for (SamplingHeartbeat i : heartbeats)
-            avg += i.heartbeat;
-        return avg/heartbeats.size();
+            if (i.heartbeat != null) {
+                avg += i.heartbeat;
+                dim++;
+            }
+
+        if(dim == 0)
+            return null;
+
+        return avg/dim;
     }
 
     public ArrayList<SamplingHeartbeat> getHeartbeats() {

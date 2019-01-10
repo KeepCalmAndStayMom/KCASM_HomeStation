@@ -10,11 +10,11 @@ public class SettingsHue {
         SETTINGS.put("OFF", "\"on\": false");
 
         SETTINGS.put("MIN_BRI", "\"bri\": 50");
-        SETTINGS.put("MID_BRI", "\"bri\": 127");
+        SETTINGS.put("MID_BRI", "\"bri\": 140");
         SETTINGS.put("MAX_BRI", "\"bri\": 254");
 
         SETTINGS.put("MIN_SAT", "\"sat\": 50");
-        SETTINGS.put("MID_SAT", "\"sat\": 127");
+        SETTINGS.put("MID_SAT", "\"sat\": 140");
         SETTINGS.put("MAX_SAT", "\"sat\": 254");
 
         SETTINGS.put("RED", "\"hue\": 0");

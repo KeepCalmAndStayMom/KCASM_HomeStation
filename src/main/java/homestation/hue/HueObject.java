@@ -14,10 +14,12 @@ public class HueObject {
     private ArrayList<Hue> hues = new ArrayList<>();
 
     public HueObject() {
-        for (String s : UtilityMethodsHue.getAllLights().keySet()) {
+        /*for (String s : UtilityMethodsHue.getAllLights().keySet()) {
             hues.add(new Hue(Integer.parseInt(s)));
             HueToObject(Integer.parseInt(s));
-        }
+        }*/
+        hues.add(new Hue(1));
+        HueToObject(1);
     }
 
     public synchronized void updateAllLights() {
@@ -34,7 +36,7 @@ public class HueObject {
     }
 
     public synchronized void chromotherapySoft() {
-        MQTTPublisher.publishHue("{\"cromoterapia\": \"soft\"}");
+        MQTTPublisher.publishHue("{\"chromotherapy\": \"soft\"}");
 
         setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("ON") + COMMA + SettingsHue.SETTINGS.get("BLUE") + COMMA + SettingsHue.SETTINGS.get("MAX_BRI") + COMMA + SettingsHue.SETTINGS.get("MAX_SAT") + CLOSED_BRACE);
         sleep(5000);
@@ -48,34 +50,31 @@ public class HueObject {
         setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("MAX_BRI") + COMMA + SettingsHue.SETTINGS.get("SELECT") + CLOSED_BRACE);
         sleep(5000);
 
-        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("MAX_BRI") + COMMA + SettingsHue.SETTINGS.get("NONE_ALERT") + COMMA + SettingsHue.SETTINGS.get("COLORLOOP") + CLOSED_BRACE);
+        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("MAX_BRI") + COMMA + SettingsHue.SETTINGS.get("NONE_ALERT") + /*COMMA + SettingsHue.SETTINGS.get("COLORLOOP") +*/ CLOSED_BRACE);
         sleep(5000);
 
-        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("DEFAULT_COLOR") + COMMA + SettingsHue.SETTINGS.get("NONE_EFFECT") + CLOSED_BRACE);
+        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("MID_BRI") + COMMA + SettingsHue.SETTINGS.get("MID_SAT") + COMMA + SettingsHue.SETTINGS.get("DEFAULT_COLOR") + COMMA + SettingsHue.SETTINGS.get("NONE_EFFECT") + CLOSED_BRACE);
     }
 
     public synchronized void chromotherapyHard() {
-        MQTTPublisher.publishHue("{\"cromoterapia\": \"hard\"}");
+        MQTTPublisher.publishHue("{\"chromotherapy\": \"hard\"}");
 
         setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("ON") + COMMA + SettingsHue.SETTINGS.get("BLUE") + COMMA + SettingsHue.SETTINGS.get("MAX_BRI") + COMMA + SettingsHue.SETTINGS.get("MAX_SAT") + CLOSED_BRACE);
         sleep(5000);
 
-        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("RED") + COMMA + SettingsHue.SETTINGS.get("MAX_BRI") + COMMA + SettingsHue.SETTINGS.get("MIN_SAT") + CLOSED_BRACE);
+        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("MAX_BRI") + COMMA + SettingsHue.SETTINGS.get("MID_SAT") + CLOSED_BRACE);
         sleep(5000);
 
-        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("FUCHSIA") + COMMA + SettingsHue.SETTINGS.get("MIN_BRI") + COMMA + SettingsHue.SETTINGS.get("MAX_SAT") + CLOSED_BRACE);
+        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("YELLOW") + COMMA + SettingsHue.SETTINGS.get("MID_BRI") + COMMA + SettingsHue.SETTINGS.get("MAX_SAT") + CLOSED_BRACE);
         sleep(5000);
 
-        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("MAX_BRI") + COMMA + SettingsHue.SETTINGS.get("LSELECT") + CLOSED_BRACE);
+        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("MID_BRI") + COMMA + SettingsHue.SETTINGS.get("BLUE") + CLOSED_BRACE);
         sleep(5000);
 
-        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("MID_BRI") + COMMA + SettingsHue.SETTINGS.get("NONE_ALERT") + COMMA + SettingsHue.SETTINGS.get("COLORLOOP") + CLOSED_BRACE);
+        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("GREEN") + COMMA + SettingsHue.SETTINGS.get("MIN_SAT") + CLOSED_BRACE);
         sleep(5000);
 
-        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("GREEN") + COMMA + SettingsHue.SETTINGS.get("NONE_EFFECT") + CLOSED_BRACE);
-        sleep(5000);
-
-        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("DEFAULT_COLOR") + COMMA + SettingsHue.SETTINGS.get("NONE_EFFECT") + CLOSED_BRACE);
+        setAllHues(OPEN_BRACE + SettingsHue.SETTINGS.get("MID_BRI") + COMMA + SettingsHue.SETTINGS.get("MID_SAT") + COMMA + SettingsHue.SETTINGS.get("DEFAULT_COLOR") + COMMA + SettingsHue.SETTINGS.get("NONE_EFFECT") + CLOSED_BRACE);
     }
 
     private void setAllHues(String json) {

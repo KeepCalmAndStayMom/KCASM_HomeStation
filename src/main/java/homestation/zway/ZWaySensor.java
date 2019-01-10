@@ -1,5 +1,6 @@
 package homestation.zway;
 
+import com.google.gson.Gson;
 import de.fh_zwickau.informatik.sensor.IZWayApi;
 import de.fh_zwickau.informatik.sensor.ZWayApiHttp;
 import de.fh_zwickau.informatik.sensor.model.devices.Device;
@@ -21,6 +22,11 @@ public class ZWaySensor {
     }
 
     public synchronized void sensorsManagement() {
+        Gson gson = new Gson();
+
+        //System.out.println(gson.toJson(zwayApi.getDevices().getAllDevices()));
+
+        //System.out.println(gson.toJson(zwayApi.getDevices().getDevicesByNodeId(6).get(6)));
 
         Device temp = zwayApi.getDevice("ZWayVDev_zway_" + nodeId + "-0-49-1");
         Device lum = zwayApi.getDevice("ZWayVDev_zway_" + nodeId + "-0-49-3");

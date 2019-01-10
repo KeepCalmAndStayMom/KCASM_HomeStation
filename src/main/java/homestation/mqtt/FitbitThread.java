@@ -28,7 +28,7 @@ public class FitbitThread extends Thread {
 
             fitbit.updateFitbit(HomestationSettings.DTF.format(LocalDate.now()), HomestationSettings.SDF.format(cal.getTime()), HomestationSettings.SDF.format(Calendar.getInstance().getTime()));
 
-            if (i == 15) {
+            if (i == 1) {
                 try {
                     topic.publish(new MqttMessage(fitbit.toJson().getBytes()));
                 } catch (MqttException e) {

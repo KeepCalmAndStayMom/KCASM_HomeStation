@@ -42,7 +42,7 @@ public class ControllerThread extends Thread {
         Integer avg_heartbreats = fitbit.heartRate.getAvgHeartbeats();
 
         if(avg_heartbreats != null) {
-            if (avg_heartbreats >= 110 && avg_heartbreats < 150)
+            if (avg_heartbreats >= 80 && avg_heartbreats < 150)
                 obj.chromotherapySoft();
             if (avg_heartbreats >= 150)
                 obj.chromotherapyHard();
