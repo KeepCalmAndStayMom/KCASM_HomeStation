@@ -4,7 +4,7 @@ import homestation.HomestationSettings;
 
 import java.time.format.DateTimeFormatter;
 
-class HospitalConstants {
+public class HospitalConstants {
     static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     final static int MINIMUM_THRESHOLD = 105;//heartbeats
@@ -77,7 +77,7 @@ class HospitalConstants {
 
     //notification messages
     final private static String END_MESSAGE = "\n\nNon rispondere a questo messaggio di sistema.\n\n";
-    final static String GO = "Il parto e' imminente! Vai in ospedale!" + END_MESSAGE;
-    final static String PREPARE = "E' conveniente iniziare a preparare le valigie, il parto e' probabile!" + END_MESSAGE;
+    public final static String GO = "Il parto e' imminente! Vai in ospedale!" + END_MESSAGE;
+    public final static String PREPARE = "E' conveniente iniziare a preparare le valigie, il parto e' probabile!" + END_MESSAGE;
     final static String SUBJECT = "Notifica parto";
 }

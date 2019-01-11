@@ -13,6 +13,9 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 public class MainHomestation {
+
+    static MQTTPublisher publisher;
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int key = 0;
@@ -21,15 +24,16 @@ public class MainHomestation {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MINUTE, -5);
 
-        HueObject obj = new HueObject();
+        //HueObject obj = new HueObject();
         //ZWaySensor zway = new ZWaySensor(HomestationSettings.SENSOR_NODE);
         //FitbitObject fitbit = UtilityMethodsFitbit.getFitbitAll(HomestationSettings.DTF.format(LocalDate.now()), HomestationSettings.SDF.format(cal.getTime()), HomestationSettings.SDF.format(Calendar.getInstance().getTime()));
 
-        MQTTPublisher publisher = new MQTTPublisher(null, null);
+        publisher = new MQTTPublisher(null, null);
         publisher.start();
 
-        DialogflowWebhookThread webhook = new DialogflowWebhookThread(obj, null);
+        DialogflowWebhookThread webhook = new DialogflowWebhookThread(null, null);
         webhook.start();
+
         //ControllerThread controller = new ControllerThread(obj, zway, fitbit);
         //controller.start();
 
@@ -41,28 +45,40 @@ public class MainHomestation {
             key = in.nextInt();
             switch(key) {
                 case 1:
-                    obj.chromotherapySoft();
+                    //obj.chromotherapySoft();
                     break;
                 case 2:
-                    obj.chromotherapyHard();
+                    //obj.chromotherapyHard();
                     break;
                 case 3:
-                    obj.switchOnHues();
+                    //obj.switchOnHues();
                     break;
                 case 4:
-                    obj.switchOffHues();
+                    //obj.switchOffHues();
                     break;
-                case 5:
+                case 5: sendSensorData();
                     break;
-                case 6:
+                case 6: sendFitbitData(true);
                     break;
-                case 7:
+                case 7: sendFitbitData(false);
                     break;
-                case 8:
+                case 8: HospitalThread.sendMessage(HospitalConstants.GO);
+                    break;
+                case 9: HospitalThread.sendMessage(HospitalConstants.PREPARE);
+                    break;
+                case 10:
                     System.exit(0);
                     break;
             }
         }
+    }
+
+    private static void sendFitbitData(boolean i) {
+            publisher.publishFitbit(i);
+    }
+
+    private static void sendSensorData() {
+        publisher.publishZWaySensor();
     }
 
     private static void showMenu() {
@@ -71,8 +87,10 @@ public class MainHomestation {
         System.out.println("3) Accendi luci");
         System.out.println("4) Spegni luci");
         System.out.println("5) Invio dati sensore al server");
-        System.out.println("6) Invio dati fitbit 75 al server");
-        System.out.println("7) Invio dati fitbit 130 al server");
-        System.out.println("8) Esci");
+        System.out.println("6) Invio dati fitbit <90 al server");
+        System.out.println("7) Invio dati fitbit >130 al server");
+        System.out.println("8) Invio email Controllo Contrazioni Andare");
+        System.out.println("9) Invio email Controllo Contrazioni Prepararsi");
+        System.out.println("10) Esci");
     }
 }

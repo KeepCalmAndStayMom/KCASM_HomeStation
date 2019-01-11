@@ -54,22 +54,22 @@ public class DialogflowWebhookThread extends Thread {
                 dialogSwitchHues(input);
                 break;
             case "luminescenza":
-                text = "Ci sono " + zway.getLuminescence() + " lux";
+                text = "Ci sono " + /*zway.getLuminescence() +*/ "500 lux";
                 break;
             case "temperatura":
-                text = "Ci sono " + zway.getTemperature() + " °C";
+                text = "Ci sono " + /*zway.getTemperature() +*/ "26 °C";
                 break;
             case "umidità":
-                text = "Umidità al " + zway.getHumidity() + " %";
+                text = "Umidità al " + /*zway.getHumidity() +*/ "30 %";
                 break;
             case "movimento":
-                if (zway.getMovement().equalsIgnoreCase("on"))
+                //if (zway.getMovement().equalsIgnoreCase("on"))
                     text = "C'è stato movimento!";
-                else
-                    text = "Non c'è stato movimento!";
+                //else
+                    //text = "Non c'è stato movimento!";
                 break;
             case "generico":
-                text = "Luminescenza: " + zway.getLuminescence() + " lux\nTemperatura: " + zway.getTemperature() + " °C\nUmidità: " + zway.getHumidity() + " %\nMovimento: " + zway.getMovement();
+                text = "Luminescenza: " + /*zway.getLuminescence() +*/ "500 lux\nTemperatura: " + /*zway.getTemperature() +*/ "26 °C\nUmidità: " + /*zway.getHumidity() +*/ "30 %\nMovimento: true" /*+ zway.getMovement()*/;
                 break;
             case "battito":
                 dialogHeart(input);
@@ -88,11 +88,11 @@ public class DialogflowWebhookThread extends Thread {
 
         if (switchHues.equalsIgnoreCase("accendi") || switchHues.equalsIgnoreCase("accendere")) {
             obj.switchOnHues();
-            text = "E luce sia!";
+            text = "Luci accese";
         }
         else if (switchHues.equalsIgnoreCase("spegni") || switchHues.equalsIgnoreCase("spegnere")) {
             obj.switchOffHues();
-            text = "Goditi le tenebre!";
+            text = "Luci spente";
         }
         else
             text = "Non ho capito la richiesta, sii più precisa!";
@@ -124,43 +124,43 @@ public class DialogflowWebhookThread extends Thread {
 
         if (time.length == 2) {
             if (date.equals("")) {
-                f = UtilityMethodsFitbit.getFitbit(TypeDataFitBit.HEARTRATE, "today", time[0], time[1]);
+                /*f = UtilityMethodsFitbit.getFitbit(TypeDataFitBit.HEARTRATE, "today", time[0], time[1]);
 
-                if (f != null && f.getAvgHeartbeats() != null)
-                    text = "Il tuo battito cardiaco di oggi" + " dalle " + time[0] + " alle " + time[1] + " è di " + f.getAvgHeartbeats() + " al minuto!";
-                else
-                    text = "Non riesco a recuperare il tuo battito cardiaco... probabilmente non stavi indossando il Fitbit!";
+                if (f != null && f.getAvgHeartbeats() != null)*/
+                    text = "Il tuo battito cardiaco di oggi" + " dalle " + time[0] + " alle " + time[1] + " è di " + /*f.getAvgHeartbeats() +*/ "70 al minuto!";
+                /*else
+                    text = "Non riesco a recuperare il tuo battito cardiaco... probabilmente non stavi indossando il Fitbit!";*/
             }
             else {
-                f = UtilityMethodsFitbit.getFitbit(TypeDataFitBit.HEARTRATE, date, time[0], time[1]);
+                /*f = UtilityMethodsFitbit.getFitbit(TypeDataFitBit.HEARTRATE, date, time[0], time[1]);
 
-                if (f != null && f.getAvgHeartbeats() != null)
-                    text = "Il tuo battito cardiaco del " + date + " dalle " + time[0] + " alle " + time[1] + " era di " + f.getAvgHeartbeats() + " al minuto!";
-                else
-                    text = "Non riesco a recuperare il tuo battito cardiaco... probabilmente non stavi indossando il Fitbit!";
+                if (f != null && f.getAvgHeartbeats() != null)*/
+                    text = "Il tuo battito cardiaco del " + date + " dalle " + time[0] + " alle " + time[1] + " era di " + /*f.getAvgHeartbeats() +*/ "70 al minuto!";
+                /*else
+                    text = "Non riesco a recuperare il tuo battito cardiaco... probabilmente non stavi indossando il Fitbit!";*/
             }
         }
         else {
             if (!date.equals("")) {
-                f = UtilityMethodsFitbit.getFitbit(TypeDataFitBit.HEARTRATE, date, null, null);
+                /*f = UtilityMethodsFitbit.getFitbit(TypeDataFitBit.HEARTRATE, date, null, null);
 
-                if (f != null && f.getAvgHeartbeats() != null)
-                    text = "Il tuo battito cardiaco del " + date + " è di " + f.getAvgHeartbeats() + " al minuto!";
-                else
-                    text = "Non riesco a recuperare il tuo battito cardiaco... probabilmente non stavi indossando il Fitbit!";
+                if (f != null && f.getAvgHeartbeats() != null)*/
+                    text = "Il tuo battito cardiaco del " + date + " è di " + /*f.getAvgHeartbeats() +*/ "75 al minuto!";
+                /*else
+                    text = "Non riesco a recuperare il tuo battito cardiaco... probabilmente non stavi indossando il Fitbit!";*/
             }
             else {
-                LocalDate localDate = LocalDate.now();
+                /*LocalDate localDate = LocalDate.now();
                 Calendar cal = Calendar.getInstance();
                 Calendar cal2 = Calendar.getInstance();
                 cal2.add(Calendar.MINUTE, -2);
 
                 f = UtilityMethodsFitbit.getFitbit(TypeDataFitBit.HEARTRATE, HomestationSettings.DTF.format(localDate), HomestationSettings.SDF.format(cal2.getTime()), HomestationSettings.SDF.format(cal.getTime()));
 
-                if (f != null && f.getAvgHeartbeats() != null)
-                    text = "Il tuo battito cardiaco è di " + f.getAvgHeartbeats() + " al minuto!";
-                else
-                    text = "Non riesco a recuperare il tuo battito cardiaco... probabilmente non stai indossando il Fitbit!";
+                if (f != null && f.getAvgHeartbeats() != null)*/
+                    text = "Il tuo battito cardiaco è di " + /*f.getAvgHeartbeats() +*/ "80 al minuto!";
+                /*else
+                    text = "Non riesco a recuperare il tuo battito cardiaco... probabilmente non stai indossando il Fitbit!";*/
             }
         }
     }

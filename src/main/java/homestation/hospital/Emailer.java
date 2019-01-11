@@ -16,6 +16,7 @@ class Emailer {
     private static String mailTo = HomestationSettings.EMAIL_USER;
 
     static void sendEmail(String content) {
+        /*
         try {
             StringBuilder result = new StringBuilder();
             URL url = new URL(HospitalConstants.LOGIN_URL);
@@ -35,7 +36,7 @@ class Emailer {
             e.printStackTrace();
             System.out.println("Errore nel recupero della mail");
         }
-
+*/
         createAndSend(mailTo, content);
     }
 

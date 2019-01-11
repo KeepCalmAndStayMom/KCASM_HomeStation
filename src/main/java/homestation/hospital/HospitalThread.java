@@ -22,10 +22,10 @@ import java.util.*;
 
 public class HospitalThread extends Thread {
     private LocalDate pregnancyStart = HomestationSettings.PREGNANCY_START_DATE;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private boolean emailNotification = HomestationSettings.EMAIL_NOTIFICATION;
-    private boolean SMSNotification = HomestationSettings.SMS_NOTIFICATION;
+    private static boolean emailNotification = HomestationSettings.EMAIL_NOTIFICATION;
+    private static boolean SMSNotification = HomestationSettings.SMS_NOTIFICATION;
 
     private SamplingListScanStrategy scanStrategy;
     private SamplingListEvaluationStrategy evaluationStrategy;
@@ -166,7 +166,7 @@ public class HospitalThread extends Thread {
             System.out.println("Meglio stare a casa");
     }
 
-    private void sendMessage(String message) {
+    public static void sendMessage(String message) {
         try {
             StringBuilder result = new StringBuilder();
             URL url = new URL(HospitalConstants.PATIENT_URL);
@@ -187,16 +187,16 @@ public class HospitalThread extends Thread {
             e.printStackTrace();
         }
 
-        /*if (emailNotification)
+        if (emailNotification)
             Emailer.sendEmail(message);
-
+/*
         if (SMSNotification)
             SMSNotificator.sendSMS(message);*/
 
         sendDBMessage(message);
     }
 
-    private void sendDBMessage(String message) {
+    private static void sendDBMessage(String message) {
         try {
             CloseableHttpClient client = HttpClientBuilder.create().build();
             HttpPost post = new HttpPost(HospitalConstants.MESSAGE_URL);
