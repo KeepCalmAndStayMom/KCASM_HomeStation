@@ -60,7 +60,7 @@ public class HomestationSettings {
         API_SECRET = String.valueOf(settings.get("API_SECRET"));
         CALLBACK_PORT_FITBIT = ((Double)settings.get("CALLBACK_PORT_FITBIT")).intValue();
         CALLBACK_FITBIT = String.valueOf(settings.get("CALLBACK_FITBIT"));
-        API_URL = String.valueOf(settings.get("API_URL_2"));
+        API_URL = String.valueOf(settings.get("API_URL"));
         IPADRESS_ZWAY = String.valueOf(settings.get("IPADRESS_ZWAY"));
         USERNAME = String.valueOf(settings.get("USERNAME"));
         PASSWORD = String.valueOf(settings.get("PASSWORD"));

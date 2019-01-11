@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Scanner;
 
+import static java.lang.Thread.*;
+
 public class MainHomestation {
 
     static MQTTPublisher publisher;
@@ -24,14 +26,14 @@ public class MainHomestation {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MINUTE, -5);
 
-        //HueObject obj = new HueObject();
+        HueObject obj = new HueObject();
         //ZWaySensor zway = new ZWaySensor(HomestationSettings.SENSOR_NODE);
         //FitbitObject fitbit = UtilityMethodsFitbit.getFitbitAll(HomestationSettings.DTF.format(LocalDate.now()), HomestationSettings.SDF.format(cal.getTime()), HomestationSettings.SDF.format(Calendar.getInstance().getTime()));
 
         publisher = new MQTTPublisher(null, null);
         publisher.start();
 
-        DialogflowWebhookThread webhook = new DialogflowWebhookThread(null, null);
+        DialogflowWebhookThread webhook = new DialogflowWebhookThread(obj, null);
         webhook.start();
 
         //ControllerThread controller = new ControllerThread(obj, zway, fitbit);
@@ -40,21 +42,27 @@ public class MainHomestation {
         //HospitalThread hospital = new HospitalThread(new SkipScanStrategy(), new AllFactorsCounterEvaluationStrategy());
         //hospital.start();
 
+        try {
+            sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         while(true) {
             showMenu();
             key = in.nextInt();
             switch(key) {
                 case 1:
-                    //obj.chromotherapySoft();
+                    obj.chromotherapySoft();
                     break;
                 case 2:
-                    //obj.chromotherapyHard();
+                    obj.chromotherapyHard();
                     break;
                 case 3:
-                    //obj.switchOnHues();
+                    obj.switchOnHues();
                     break;
                 case 4:
-                    //obj.switchOffHues();
+                    obj.switchOffHues();
                     break;
                 case 5: sendSensorData();
                     break;

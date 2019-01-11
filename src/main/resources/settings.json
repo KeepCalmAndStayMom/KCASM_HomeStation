@@ -6,7 +6,7 @@
   "API_SECRET" : "e1b16930ff57e491e58b95e0cb40e34d",
   "CALLBACK_PORT_FITBIT": 4500,
   "CALLBACK_FITBIT": "127.0.0.1",
-  "API_URL": "http://192.168.1.10:8000/api/newdeveloper",
+  "API_URL": "http://127.0.0.1:8000/api/newdeveloper",
   "API_URL_2": "http://172.30.1.138/api/C0vPwqjJZo5Jt9Oe5HgO6sBFFMxgoR532IxFoGmx",
   "IPADRESS_ZWAY": "172.30.1.137",
   "USERNAME": "admin",

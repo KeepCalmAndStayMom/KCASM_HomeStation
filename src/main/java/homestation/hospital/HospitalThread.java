@@ -167,7 +167,7 @@ public class HospitalThread extends Thread {
     }
 
     public static void sendMessage(String message) {
-        try {
+        /*try {
             StringBuilder result = new StringBuilder();
             URL url = new URL(HospitalConstants.PATIENT_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -181,13 +181,13 @@ public class HospitalThread extends Thread {
             rd.close();
 
             HashMap<String, Boolean> map = new Gson().fromJson(result.toString(), HashMap.class);
-            emailNotification =  map.get("email_notify");
+            emailNotification = map.get("email_notify");
             SMSNotification = map.get("sms_notify");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (emailNotification)
+        if (emailNotification)*/
             Emailer.sendEmail(message);
 /*
         if (SMSNotification)
